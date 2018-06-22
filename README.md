@@ -1,6 +1,6 @@
 # AMWA NMOS Event and Tally Specification
 
-This repository contains details of this AMWA Specification, includi
+This repository contains details of this AMWA Specification, including core models, transports, event types and a late joiners API.
 
 ## Getting started
 
