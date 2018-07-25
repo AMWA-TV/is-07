@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition for the boolean type",
+  "title": "Boolean Type",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "description": "Base type name",
+      "type": "string",
+      "enum": [
+        "boolean"
+      ]
+    }
+  }
+}

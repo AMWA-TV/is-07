@@ -1,0 +1,84 @@
+#%RAML 0.8
+
+# AMWA NMOS Event & Tally Specification: Events API
+# (c) AMWA 2018
+
+title: Events
+baseUri: http://example.api.com/x-nmos/events/{version}
+version: v1.0
+mediaType: application/json
+schemas:
+  - Base: !include schemas/base.json
+    Sources: !include schemas/sources.json
+    Source: !include schemas/source.json
+    Event: !include schemas/event.json
+    Type: !include schemas/type_definition.json
+    EmptySchema: !include schemas/empty.json
+    ErrorSchema: !include schemas/error.json
+documentation:
+  - title: Overview
+    content: |
+      The Events API is exposed by each NMOS Device in a system that supports AMWA NMOS Event & Tally Specification. The API is used to announce the type definitions used by the Event & Tally sources and for the receiving devices to be able to check the current source state.
+
+/:
+  displayName: Base
+  get:
+    description: List of paths available from this API
+    body:
+      schema: EmptySchema
+    responses:
+      200:
+        body:
+          example: !include ../examples/eventsapi-v1.0-base-get-200.json
+          schema: Base
+/sources:
+  displayName: Sources
+  get:
+    description: List of the Event & Tally compatible sources
+    body:
+      schema: EmptySchema
+    responses:
+      200:
+        body:
+          example: !include ../examples/eventsapi-v1.0-sources-get-200.json
+          schema: Sources
+  /{sourceId}:
+    uriParameters:
+      sourceId:
+        type: string
+        pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    get:
+      description: Get a single source
+      body:
+        schema: EmptySchema
+      responses:
+        200:
+          body:
+            example: !include ../examples/eventsapi-v1.0-sourceid-get-200.json
+            schema: Source
+        404:
+          description: Returned when the requested Source ID does not exist
+          body:
+            schema: ErrorSchema
+    /type:
+      displayName: Type definition
+      get:
+        description: JSON containing detailed type information
+        body:
+          schema: EmptySchema
+        responses:
+          200:
+            body:
+              example: !include ../examples/eventsapi-v1.0-type-get-200.json
+              schema: Type
+    /state:
+      displayName: Source state
+      get:
+        description: JSON containing the last state change notification sent over the transport protocols
+        body:
+          schema: EmptySchema
+        responses:
+          200:
+            body:
+              example: !include ../examples/eventsapi-v1.0-state-get-200.json
+              schema: Event

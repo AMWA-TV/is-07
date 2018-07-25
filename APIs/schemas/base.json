@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "description": "Describes the Event & Tally API base resource",
+  "title": "Event & Tally API base resource",
+  "items": {
+    "type": "string",
+    "enum": [
+      "sources/"
+    ],
+    "minItems": 1,
+    "maxItems": 1,
+    "uniqueItems": true
+  }
+}
