@@ -1,0 +1,25 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/event_number.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Describes an event with Number payload",
+  "title": "Number event",
+  "allOf": [
+    { "$ref": "event_core.json" },
+    {
+      "type": "object",
+      "required": [
+        "event_type",
+        "payload"
+      ],
+      "properties": {
+        "event_type": {
+          "description": "Event type",
+          "type": "string",
+          "pattern": "^number(?:\\/[a-zA-Z_\\-])*$"
+        },
+        "payload": { "$ref": "number.json" }
+      }
+    }
+  ]
+}

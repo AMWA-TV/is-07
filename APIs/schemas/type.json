@@ -1,0 +1,15 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/type.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition",
+  "title": "Type definition",
+  "oneOf": [
+    { "$ref": "type_boolean.json" },
+    { "$ref": "type_boolean_enum.json" },
+    { "$ref": "type_number.json" },
+    { "$ref": "type_number_enum.json" },
+    { "$ref": "type_string.json" },
+    { "$ref": "type_string_enum.json" }
+  ]
+}
