@@ -24,8 +24,6 @@ documentation:
   displayName: Base
   get:
     description: List of paths available from this API
-    body:
-      schema: EmptySchema
     responses:
       200:
         body:
@@ -35,8 +33,6 @@ documentation:
   displayName: Sources
   get:
     description: List of the Event & Tally compatible sources
-    body:
-      schema: EmptySchema
     responses:
       200:
         body:
@@ -49,8 +45,6 @@ documentation:
         pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     get:
       description: Get a single source
-      body:
-        schema: EmptySchema
       responses:
         200:
           body:
@@ -64,21 +58,17 @@ documentation:
       displayName: Type definition
       get:
         description: JSON containing detailed type information
-        body:
-          schema: EmptySchema
         responses:
           200:
             body:
-              example: !include ../examples/eventsapi-v1.0-type-get-200.json
+              example: !include ../examples/eventsapi-v1.0-type-boolean-get-200.json
               schema: Type
     /state:
       displayName: Source state
       get:
         description: JSON containing the last state change notification sent over the transport protocols
-        body:
-          schema: EmptySchema
         responses:
           200:
             body:
-              example: !include ../examples/eventsapi-v1.0-state-get-200.json
+              example: !include ../examples/eventsapi-v1.0-state-boolean-get-200.json
               schema: Event

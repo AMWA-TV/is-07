@@ -4,6 +4,7 @@
   "type": "object",
   "description": "Type definition for the string type",
   "title": "String Type",
+  "additionalProperties": false,
   "required": [
     "type"
   ],

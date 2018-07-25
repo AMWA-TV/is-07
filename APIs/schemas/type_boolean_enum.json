@@ -4,6 +4,7 @@
   "type": "object",
   "description": "Type definition for the boolean enum type",
   "title": "Boolean Enum Type",
+  "additionalProperties": false,
   "required": [
     "type",
     "values"

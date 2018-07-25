@@ -4,6 +4,7 @@
   "type": "object",
   "description": "Type definition for the string enum type",
   "title": "String Enum Type",
+  "additionalProperties": false,
   "required": [
     "type",
     "values"

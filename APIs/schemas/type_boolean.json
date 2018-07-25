@@ -4,6 +4,7 @@
   "type": "object",
   "description": "Type definition for the boolean type",
   "title": "Boolean Type",
+  "additionalProperties": false,
   "required": [
     "type"
   ],

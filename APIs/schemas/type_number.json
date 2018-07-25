@@ -4,6 +4,7 @@
   "type": "object",
   "description": "Type definition for the number type",
   "title": "Number Type",
+  "additionalProperties": false,
   "required": [
     "type",
     "min",
@@ -22,19 +23,9 @@
       "type": "integer",
       "minimum": 1
     },
-    "min": {
-      "description": "Minimum value",
-      "type": "number"
-    },
-    "max": {
-      "description": "Maximum value",
-      "type": "number"
-    },
-    "step": {
-      "description": "Precision",
-      "type": "number",
-      "minimum": 0
-    },
+    "min": { "$ref": "number.json" },
+    "max": { "$ref": "number.json" },
+    "step": { "$ref": "number.json" },
     "unit": {
       "description": "Unit of measure",
       "type": "string"

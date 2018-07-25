@@ -18,23 +18,7 @@
           "type": "string",
           "pattern": "^number(?:\\/[a-zA-Z_\\-])*$"
         },
-        "payload": {
-          "description": "Number payload",
-          "type": "object",
-          "required": [
-            "value"
-          ],
-          "properties": {
-            "value": {
-              "description": "Number value",
-              "type": "number"
-            },
-            "scale": {
-              "description": "Denominator for rational number representation",
-              "type": "integer"
-            }
-          }
-        }
+        "payload": { "$ref": "number.json" }
       }
     }
   ]

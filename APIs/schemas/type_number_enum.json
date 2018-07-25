@@ -4,6 +4,7 @@
   "type": "object",
   "description": "Type definition for the number enum type",
   "title": "Number Enum Type",
+  "additionalProperties": false,
   "required": [
     "type",
     "values"
