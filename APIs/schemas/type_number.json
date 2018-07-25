@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition for the number type",
+  "title": "Number Type",
+  "required": [
+    "type",
+    "min",
+    "max"
+  ],
+  "properties": {
+    "type": {
+      "description": "Base type name",
+      "type": "string",
+      "enum": [
+        "number"
+      ]
+    },
+    "scale": {
+      "description": "Denominator value in case of rational numbers used for defining min, max and step.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "min": {
+      "description": "Minimum value",
+      "type": "number"
+    },
+    "max": {
+      "description": "Maximum value",
+      "type": "number"
+    },
+    "step": {
+      "description": "Precision",
+      "type": "number",
+      "minimum": 0
+    },
+    "unit": {
+      "description": "Unit of measure",
+      "type": "string"
+    }
+  }
+}
