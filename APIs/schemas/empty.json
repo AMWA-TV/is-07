@@ -1,10 +1,9 @@
 {
+  "$id": "https://www.amwa.tv/event_and_tally/empty.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "description": "Describes an empty request or response",
   "title": "Empty schema",
-  "required": [
-  ],
   "properties": {
   }
 }

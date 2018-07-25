@@ -1,4 +1,5 @@
 {
+  "$id": "https://www.amwa.tv/event_and_tally/type_string.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "description": "Type definition for the string type",
