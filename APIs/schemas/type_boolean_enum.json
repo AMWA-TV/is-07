@@ -1,0 +1,48 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/type_boolean_enum.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition for the boolean enum type",
+  "title": "Boolean Enum Type",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "values"
+  ],
+  "properties": {
+    "type": {
+      "description": "Base type name",
+      "type": "string",
+      "enum": [
+        "boolean"
+      ]
+    },
+    "values": {
+      "description": "List of allowed values",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "title": "Enum Element",
+        "required": [
+          "value",
+          "label",
+          "description"
+        ],
+        "properties": {
+          "value": {
+            "description": "Enum value",
+            "type": "boolean"
+          },
+          "label": {
+            "description": "Enum label",
+            "type": "string"
+          },
+          "description": {
+            "description": "Enum description",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

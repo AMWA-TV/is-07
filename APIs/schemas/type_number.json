@@ -1,0 +1,34 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/type_number.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition for the number type",
+  "title": "Number Type",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "min",
+    "max"
+  ],
+  "properties": {
+    "type": {
+      "description": "Base type name",
+      "type": "string",
+      "enum": [
+        "number"
+      ]
+    },
+    "scale": {
+      "description": "Denominator value in case of rational numbers used for defining min, max and step.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "min": { "$ref": "number.json" },
+    "max": { "$ref": "number.json" },
+    "step": { "$ref": "number.json" },
+    "unit": {
+      "description": "Unit of measure",
+      "type": "string"
+    }
+  }
+}

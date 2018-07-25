@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "min": {
+    "value": -200.0,
+    "scale": 10
+  },
+  "max": {
+    "value": 1000,
+    "scale": 10
+  },
+  "step": {
+    "value": 1,
+    "scale":10
+  },
+  "unit": "C"
+}

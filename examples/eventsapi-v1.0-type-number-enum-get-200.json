@@ -1,0 +1,20 @@
+{
+  "type" :  "number",
+  "values" : [
+    {
+      "value": 0,
+      "label": "idle",
+      "description": "Studio condition is idle"
+    },
+    {
+      "value": 1,
+      "label": "reh",
+      "description": "Studio condition is rehearsal"
+    },
+    {
+      "value": 2,
+      "label": "tx",
+      "description": "Studio condition is tx"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/event_string.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Describes an event with string payload",
+  "title": "String event",
+  "allOf": [
+    { "$ref": "event_core.json" },
+    {
+      "type": "object",
+      "required": [
+        "event_type",
+        "payload"
+      ],
+      "properties": {
+        "event_type": {
+          "description": "Event type",
+          "type": "string",
+          "pattern": "^string(?:\\/[a-zA-Z_\\-])*$"
+        },
+        "payload": {
+          "description": "String payload",
+          "type": "object",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "description": "String value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
