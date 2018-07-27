@@ -1,4 +1,4 @@
-#%RAML 0.8
+#%RAML 1.0
 
 # AMWA NMOS Event & Tally Specification: Events API
 # (c) AMWA 2018
@@ -7,13 +7,21 @@ title: Events
 baseUri: http://example.api.com/x-nmos/events/{version}
 version: v1.0
 mediaType: application/json
-schemas:
-  - Base: !include schemas/base.json
-    Sources: !include schemas/sources.json
-    Source: !include schemas/source.json
-    Event: !include schemas/event.json
-    Type: !include schemas/type.json
-    ErrorSchema: !include schemas/error.json
+types:
+  Base:
+    type: !include schemas/base.json
+  Sources:
+    type: !include schemas/sources.json
+  Source:
+    type: !include schemas/source.json
+  EventCore:
+    type: !include schemas/event_core.json
+  EventNumber:
+    type: !include schemas/event_number.json
+  Type:
+    type: !include schemas/type.json
+  ErrorSchema:
+    type: !include schemas/error.json
 documentation:
   - title: Overview
     content: |
@@ -27,7 +35,7 @@ documentation:
       200:
         body:
           example: !include ../examples/eventsapi-v1.0-base-get-200.json
-          schema: Base
+          type: Base
 /sources:
   displayName: Sources
   get:
@@ -36,7 +44,7 @@ documentation:
       200:
         body:
           example: !include ../examples/eventsapi-v1.0-sources-get-200.json
-          schema: Sources
+          type: Sources
   /{sourceId}:
     uriParameters:
       sourceId:
@@ -48,11 +56,11 @@ documentation:
         200:
           body:
             example: !include ../examples/eventsapi-v1.0-sourceid-get-200.json
-            schema: Source
+            type: Source
         404:
           description: Returned when the requested Source ID does not exist
           body:
-            schema: ErrorSchema
+            type: ErrorSchema
     /type:
       displayName: Type definition
       get:
@@ -61,7 +69,7 @@ documentation:
           200:
             body:
               example: !include ../examples/eventsapi-v1.0-type-boolean-get-200.json
-              schema: Type
+              type: Type
     /state:
       displayName: Source state
       get:
@@ -70,4 +78,4 @@ documentation:
           200:
             body:
               example: !include ../examples/eventsapi-v1.0-state-boolean-get-200.json
-              schema: Event
+              type: Event
