@@ -10,7 +10,7 @@ Readers are advised to be familiar with:
 
 Readers should read the [documentation](docs/) in this repository.
 
-HTML renders of this repo will be made available through [GitHub Pages](https://amwa-tv.github.io/nmos/nmos-event-tally)
+HTML renders of this repo will be made available through [GitHub Pages](https://amwa-tv.github.io/nmos-event-tally)
 
 ## Releases
 
