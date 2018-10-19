@@ -1,0 +1,32 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/message_connection_lost.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Message that gets registered with the broker to send it out when the connection to the broker gets ungracefully closed",
+  "title": "Connection lost message",
+  "required": [
+    "identity",
+    "message_type"
+  ],
+  "properties": {
+    "message_type": {
+      "description": "A fixed string showing this is a connection lost message",
+      "type": "string",
+      "pattern": "^connection_lost$"
+    },
+    "identity": {
+      "description": "Object describing event identity",
+      "type": "object",
+      "required": [
+        "source_id"
+      ],
+      "properties": {
+        "source_id": {
+          "description": "ID of the source which identifies the emitter of the event",
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        }
+      }
+    }
+  }
+}

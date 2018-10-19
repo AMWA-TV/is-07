@@ -8,5 +8,6 @@
     },
     "payload": {
         "value": 16342
-    }
+    },
+    "message_type": "state"
 }
