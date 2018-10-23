@@ -1,21 +1,19 @@
 {
-  "$id": "https://www.amwa.tv/event_and_tally/event_core.json",
+  "$id": "https://www.amwa.tv/event_and_tally/message_shutdown_reboot.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "description": "Message that gets sent out when the source state changes",
-  "title": "State change event",
+  "description": "Message that gets sent out when the device start a shutdown or reboot process",
+  "title": "Shutdown and reboot message",
   "required": [
     "identity",
     "timing",
-    "event_type",
-    "payload",
     "message_type"
   ],
   "properties": {
     "message_type": {
-      "description": "A fixed string showing this is a state message",
+      "description": "A fixed string showing this is a reboot or a shutdown message",
       "type": "string",
-      "pattern": "^state$"
+      "pattern": "^reboot|shutdown$"
     },
     "identity": {
       "description": "Object describing event identity",
@@ -25,7 +23,7 @@
       ],
       "properties": {
         "source_id": {
-          "description": "ID of the source that holds the state that has changed",
+          "description": "ID of the source which identifies the emitter of the event",
           "type": "string",
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
         }
@@ -40,16 +38,6 @@
       "properties": {
         "creation_timestamp": {
           "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message was created",
-          "type": "string",
-          "pattern": "^[0-9]+:[0-9]+$"
-        },
-        "origin_timestamp": {
-          "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message that triggered this message (if any) was created",
-          "type": "string",
-          "pattern": "^[0-9]+:[0-9]+$"
-        },
-        "action_timestamp": {
-          "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the state change described in the event took or will take place",
           "type": "string",
           "pattern": "^[0-9]+:[0-9]+$"
         }

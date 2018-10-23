@@ -9,5 +9,6 @@
     "payload": {
         "value": 201,
         "scale": 10
-    }
+    },
+    "message_type": "state"
 }
