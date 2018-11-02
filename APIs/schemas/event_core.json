@@ -5,6 +5,7 @@
   "description": "Message that gets sent out when the source state changes",
   "title": "State change event",
   "required": [
+    "topic",
     "identity",
     "timing",
     "event_type",
@@ -16,6 +17,11 @@
       "description": "A fixed string showing this is a state message",
       "type": "string",
       "pattern": "^state$"
+    },
+    "topic": {
+      "description": "Source-specific topic ID used for filtering messages at the receiver side",
+      "type": "string",
+      "pattern": "^x-nmos/source/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     },
     "identity": {
       "description": "Object describing event identity",

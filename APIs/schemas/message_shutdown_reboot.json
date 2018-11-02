@@ -5,6 +5,7 @@
   "description": "Message that gets sent out when the device start a shutdown or reboot process",
   "title": "Shutdown and reboot message",
   "required": [
+    "topic",
     "identity",
     "timing",
     "message_type"
@@ -14,6 +15,11 @@
       "description": "A fixed string showing this is a reboot or a shutdown message",
       "type": "string",
       "pattern": "^reboot|shutdown$"
+    },
+    "topic": {
+      "description": "Source-specific topic ID used for filtering messages at the receiver side",
+      "type": "string",
+      "pattern": "^x-nmos/source/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     },
     "identity": {
       "description": "Object describing event identity",
