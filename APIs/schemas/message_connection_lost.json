@@ -5,7 +5,6 @@
   "description": "Message that gets registered with the broker to send it out when the connection to the broker gets ungracefully closed",
   "title": "Connection lost message",
   "required": [
-    "topic",
     "identity",
     "message_type"
   ],
@@ -14,11 +13,6 @@
       "description": "A fixed string showing this is a connection lost message",
       "type": "string",
       "pattern": "^connection_lost$"
-    },
-    "topic": {
-      "description": "Source-specific topic ID used for filtering messages at the receiver side",
-      "type": "string",
-      "pattern": "^x-nmos/source/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     },
     "identity": {
       "description": "Object describing event identity",
@@ -29,6 +23,11 @@
       "properties": {
         "source_id": {
           "description": "ID of the source which identifies the emitter of the event",
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "flow_id": {
+          "description": "ID of the flow carrying the message",
           "type": "string",
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
         }

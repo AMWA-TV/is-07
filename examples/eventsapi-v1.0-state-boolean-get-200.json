@@ -1,14 +1,13 @@
 {
-  "topic": "x-nmos/source/1ea39324-a32b-4e1d-86e9-33f9956ebc60",
   "identity": {
-      "source_id": "1ea39324-a32b-4e1d-86e9-33f9956ebc60"
+    "source_id": "1ea39324-a32b-4e1d-86e9-33f9956ebc60"
   },
   "event_type": "boolean",
   "timing": {
-      "creation_timestamp": "1532504241:104000200"
+    "creation_timestamp": "1532504241:104000200"
   },
   "payload": {
-      "value": false
+    "value": false
   },
   "message_type": "state"
 }
