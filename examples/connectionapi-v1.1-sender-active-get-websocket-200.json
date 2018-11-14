@@ -7,10 +7,8 @@
     "activation_time": "1541508905:0"
   },
   "transport_params": [{
-    "destination_host": "broker.mydomain.com",
-    "destination_port": 1883,
-    "broker_topic": "my_topic_name",
-    "ext_is_07_rest_api_url": "http://broker.mydomain.com/x-nmos/events/v1.0/sources/6cbd0441-7882-44cd-9557-842243a0d618",
+    "connection_uri": "ws://hostname/x-nmos/events/v1.0/device_id/58f6b536-ca4c-43fd-880a-9df2501fc125",
+    "ext_is_07_rest_api_url": "http://hostname/x-nmos/events/v1.0/sources/6cbd0441-7882-44cd-9557-842243a0d618",
     "ext_is_07_source_id": "6cbd0441-7882-44cd-9557-842243a0d618"
   }]
 }

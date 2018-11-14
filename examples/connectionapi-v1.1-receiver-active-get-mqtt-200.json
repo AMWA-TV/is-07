@@ -14,7 +14,8 @@
     {
       "source_host": "broker.mydomain.com",
       "source_port": 1883,
-      "broker_topic": "my_topic_name"
+      "broker_topic": "my_topic_name",
+      "ext_is_07_rest_api_url": "http://hostname/x-nmos/events/v1.0/sources/6cbd0441-7882-44cd-9557-842243a0d618",
     }
   ]
 }
