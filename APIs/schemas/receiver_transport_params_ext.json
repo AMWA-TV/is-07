@@ -6,15 +6,19 @@
   "type": "object",
   "properties": {
     "ext_is_07_rest_api_url": {
-      "type": "string",
-      "description": "the event and tally rest api url targeting the associated source",
-      "default": "auto"
+      "type": [
+        "string",
+        null
+      ],
+      "description": "the event and tally rest api url targeting the associated source"
     },
     "ext_is_07_source_id": {
-      "type": "string",
+      "type": [
+        "string",
+        null
+      ],
       "description": "ID of the related source",
-      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-      "default": "auto"
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     }
   }
 }
