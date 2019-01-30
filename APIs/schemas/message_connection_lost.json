@@ -5,7 +5,6 @@
   "description": "Message that gets registered with the broker to send it out when the connection to the broker gets ungracefully closed. The topic used is connection specific and has to be specified in the connection_status_broker_topic parameter of the MQTT IS-05 transport parameters object.",
   "title": "Connection lost message",
   "required": [
-    "identity",
     "message_type"
   ],
   "properties": {
