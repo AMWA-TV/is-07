@@ -16,7 +16,7 @@
         "event_type": {
           "description": "Event type",
           "type": "string",
-          "pattern": "^number(?:\\/[a-zA-Z_\\-])*$"
+          "pattern": "^number(\\/[a-zA-Z_\\-]+)*$"
         },
         "payload": { "$ref": "number.json" }
       }
