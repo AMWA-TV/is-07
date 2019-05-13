@@ -68,6 +68,10 @@ documentation:
             body:
               example: !include ../examples/eventsapi-v1.0-type-boolean-get-200.json
               type: Type
+          404:
+            description: Returned when the requested Source ID does not exist
+            body:
+              type: ErrorSchema
     /state:
       displayName: Source state
       get:
@@ -77,3 +81,7 @@ documentation:
             body:
               example: !include ../examples/eventsapi-v1.0-state-boolean-get-200.json
               type: Event
+          404:
+            description: Returned when the requested Source ID does not exist
+            body:
+              type: ErrorSchema
