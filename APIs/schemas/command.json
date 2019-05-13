@@ -1,0 +1,12 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/command.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Allowed commands (communication from the receiver to the sender)",
+  "title": "Command",
+  "oneOf": [{
+    "$ref": "command_health.json"
+  }, {
+    "$ref": "command_subscription.json"
+  }]
+}
