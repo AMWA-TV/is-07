@@ -16,7 +16,7 @@
         "event_type": {
           "description": "Event type",
           "type": "string",
-          "pattern": "^boolean(?:\\/[a-zA-Z_\\-])*$"
+          "pattern": "^boolean(\\/[^\\s\\/]+)*$"
         },
         "payload": {
           "description": "Boolean payload",

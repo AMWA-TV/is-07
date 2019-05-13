@@ -4,10 +4,13 @@
   "type": "object",
   "description": "Message that gets sent out when the source state changes",
   "title": "State change event",
-  "oneOf": [
-    { "$ref": "event_boolean.json" },
-    { "$ref": "event_number.json" },
-    { "$ref": "event_string.json" },
-    { "$ref": "event_object.json" }
-  ]
+  "oneOf": [{
+    "$ref": "event_boolean.json"
+  }, {
+    "$ref": "event_number.json"
+  }, {
+    "$ref": "event_string.json"
+  }, {
+    "$ref": "event_object.json"
+  }]
 }

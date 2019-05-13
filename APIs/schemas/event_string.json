@@ -16,7 +16,7 @@
         "event_type": {
           "description": "Event type",
           "type": "string",
-          "pattern": "^string(?:\\/[a-zA-Z_\\-])*$"
+          "pattern": "^string(\\/[^\\s\\/]+)*$"
         },
         "payload": {
           "description": "String payload",
