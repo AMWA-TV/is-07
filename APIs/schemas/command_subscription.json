@@ -1,0 +1,29 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/command_subscription.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Command that subscribes the receiver to receive the state change messages for the specified sources",
+  "title": "Subscription command",
+  "required": [
+    "command",
+    "sources"
+  ],
+  "properties": {
+    "command": {
+      "description": "A fixed string showing this is a subscription command",
+      "type": "string",
+      "pattern": "^subscription$"
+    },
+    "sources": {
+      "type": "array",
+      "description": "A list of Event & Tally sources to subscribe to",
+      "items": {
+        "description": "IDs of the Event & Tally compatible sources",
+        "type": "string",
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    }
+  }
+}
