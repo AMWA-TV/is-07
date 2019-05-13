@@ -2,8 +2,8 @@
   "$id": "https://www.amwa.tv/event_and_tally/event.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "description": "Event messages",
-  "title": "Event",
+  "description": "Message that gets sent out when the source state changes",
+  "title": "State change event",
   "oneOf": [{
     "$ref": "event_boolean.json"
   }, {
