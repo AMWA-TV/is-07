@@ -7,7 +7,7 @@
   "properties": {
     "ext_is_07_rest_api_url": {
       "type": "string",
-      "description": "the event and tally rest api url targeting the associated source"
+      "description": "the URL for the Events API resource for the associated source"
     },
     "ext_is_07_source_id": {
       "type": "string",
