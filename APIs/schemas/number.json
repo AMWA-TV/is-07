@@ -12,8 +12,9 @@
       "type": "number"
     },
     "scale": {
-      "description": "Denominator for rational number representation",
-      "type": "integer"
+      "description": "Denominator for rational number representation (default = 1)",
+      "type": "integer",
+      "minimum": 1
     }
   }
 }
