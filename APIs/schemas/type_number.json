@@ -19,7 +19,7 @@
       ]
     },
     "scale": {
-      "description": "Denominator value in case of rational numbers used for defining min, max and step.",
+      "description": "Denominator typically used for rational numbers in the event payload",
       "type": "integer",
       "minimum": 1
     },
