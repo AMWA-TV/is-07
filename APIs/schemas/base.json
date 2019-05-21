@@ -2,8 +2,8 @@
   "$id": "https://www.amwa.tv/event_and_tally/base.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "array",
-  "description": "Describes the Event & Tally API base resource",
-  "title": "Event & Tally API base resource",
+  "description": "Describes the Events API base resource",
+  "title": "Events API base resource",
   "items": {
     "type": "string",
     "enum": [

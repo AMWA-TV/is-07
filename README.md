@@ -1,6 +1,6 @@
 # AMWA IS-07 NMOS Event & Tally Specification
 
-This repository contains details of this AMWA Specification, including message types, event types, core models, transports, rest api and measurement units guidelines.
+This repository contains details of this AMWA Specification, including message types, event types, core models, transports, REST API and measurement units guidelines.
 
 ## Getting started
 

@@ -1,8 +1,8 @@
 {
   "$id": "https://www.amwa.tv/event_and_tally/receiver_transport_params_ext.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "Describes external Sender transport parameters defined for IS-07 NMOS Event & Tally specification. The constraints in this schema are minimum constraints, but may be further constrained at the constraints endpoint.",
-  "title": "External Sender Transport Parameters",
+  "description": "Describes external Receiver transport parameters defined for IS-07 NMOS Event & Tally specification. The constraints in this schema are minimum constraints, but may be further constrained at the constraints endpoint.",
+  "title": "External Receiver Transport Parameters",
   "type": "object",
   "properties": {
     "ext_is_07_rest_api_url": {
@@ -10,7 +10,7 @@
         "string",
         "null"
       ],
-      "description": "the event and tally rest api url targeting the associated source"
+      "description": "the URL for the Events API resource for the associated source"
     },
     "ext_is_07_source_id": {
       "type": [
