@@ -32,7 +32,7 @@ documentation:
     responses:
       200:
         body:
-          example: !include ../examples/eventsapi-v1.0-base-get-200.json
+          example: !include ../examples/eventsapi-base-get-200.json
           type: Base
 /sources:
   displayName: Sources
@@ -41,7 +41,7 @@ documentation:
     responses:
       200:
         body:
-          example: !include ../examples/eventsapi-v1.0-sources-get-200.json
+          example: !include ../examples/eventsapi-sources-get-200.json
           type: Sources
   /{sourceId}:
     uriParameters:
@@ -53,7 +53,7 @@ documentation:
       responses:
         200:
           body:
-            example: !include ../examples/eventsapi-v1.0-sourceid-get-200.json
+            example: !include ../examples/eventsapi-sourceid-get-200.json
             type: Source
         404:
           description: Returned when the requested Source ID does not exist
@@ -66,7 +66,7 @@ documentation:
         responses:
           200:
             body:
-              example: !include ../examples/eventsapi-v1.0-type-boolean-get-200.json
+              example: !include ../examples/eventsapi-type-boolean-get-200.json
               type: Type
           404:
             description: Returned when the requested Source ID does not exist
@@ -79,7 +79,7 @@ documentation:
         responses:
           200:
             body:
-              example: !include ../examples/eventsapi-v1.0-state-boolean-get-200.json
+              example: !include ../examples/eventsapi-state-boolean-get-200.json
               type: Event
           404:
             description: Returned when the requested Source ID does not exist
