@@ -7,7 +7,7 @@
   "oneOf": [{
     "$ref": "event.json"
   }, {
-    "$ref": "message_connection_lost.json"
+    "$ref": "message_connection_status.json"
   }, {
     "$ref": "message_health.json"
   }, {
