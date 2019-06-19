@@ -13,7 +13,8 @@
   "transport_params": [{
     "source_host": "broker.mydomain.com",
     "source_port": 1883,
-    "broker_topic": "my_topic_name",
+    "broker_topic": "x-nmos/events/v1.0/sources/6cbd0441-7882-44cd-9557-842243a0d618",
+    "connection_status_broker_topic": "x-nmos/events/v1.0/connections/a9c3cc7a-36f1-429c-b480-87b9d7e26b83",
     "ext_is_07_rest_api_url": "http://hostname/x-nmos/events/v1.0/sources/6cbd0441-7882-44cd-9557-842243a0d618"
   }]
 }
