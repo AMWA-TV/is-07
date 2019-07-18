@@ -1,0 +1,14 @@
+{
+  "identity": {
+      "source_id": "f9c7b88b-1846-43d9-9e53-c230e77d91ac"
+  },
+  "event_type": "number/temperature/C",
+  "timing": {
+      "creation_timestamp": "1532504241:104000200"
+  },
+  "payload": {
+      "value": 201,
+	  "scale": 10
+  },
+  "message_type": "state"
+}
