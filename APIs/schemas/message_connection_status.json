@@ -17,5 +17,6 @@
     "active": {
       "description": "A boolean value showing whether the MQTT client is connected to the broker.",
       "type": "boolean"
+    }
   }
 }
