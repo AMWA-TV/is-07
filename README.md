@@ -13,7 +13,7 @@ Readers are advised to be familiar with:
 
 Readers should read the [documentation](docs/) in this repository, and the [APIs](APIs/), which are written in RAML.
 
-HTML renders of this repo will be made available through [GitHub Pages](https://amwa-tv.github.io/nmos-event-tally)
+> HTML rendered versions of all NMOS Specifications are available on the [NMOS GitHub pages](https://amwa-tv.github.io/nmos)
 
 ## Releases
 
