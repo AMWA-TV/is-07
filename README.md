@@ -1,5 +1,8 @@
 # AMWA IS-07 NMOS Event & Tally Specification
 
+[![Lint Status](https://github.com/AMWA-TV/nmos-event-tally/workflows/Lint/badge.svg)](https://github.com/AMWA-TV/nmos-event-tally/actions?query=workflow%3ALint)
+[![Render Status](https://github.com/AMWA-TV/nmos-event-tally/workflows/Render/badge.svg)](https://github.com/AMWA-TV/nmos-event-tally/actions?query=workflow%3ARender)
+
 This repository contains details of this AMWA Specification, including message types, event types, core models, transports, REST API and measurement units guidelines.
 
 ## Getting started
