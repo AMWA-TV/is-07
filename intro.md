@@ -1,13 +1,17 @@
 ### What does it do?
 
-- It provides a template for AMWA NMOS Specifcations.
+- Provides an IP-friendly mechanism to carry time-sensitive information
+  - For example: camera tally information, audio levels, control panel button presses and status
 
 ### Why does it matter?
 
-- It helps ensure consistency between NMOS Specifications.
-- It helps us test our continuous integration.
+- ST 2110 does not provide an equivalent to GPI functionality
+  - This leads to the danger of multiple proprietary approaches
+- Consistency with other NMOS specifications
 
 ### How does it work?
 
-- It contains examples of documentation, API, schemas, and examples.
-- These are rendered to HTML and uploaded to specs.amwa.tv
+- Media Nodes emit and consume state and state change info
+- Lightweight messages sent using WebSockets or MQTT
+- Message flows connected using IS-05
+
