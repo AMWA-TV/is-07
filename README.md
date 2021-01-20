@@ -10,9 +10,9 @@ This repository contains details of this AMWA Specification, including message t
 Readers are advised to be familiar with:
 
 * The [JT-NM Reference Architecture](http://jt-nm.org/RA-1.0/)
-* The [overview of Networked Media Open Specifications](https://amwa-tv.github.io/nmos)
-* The [NMOS Discovery and Registration Specification](https://github.com/AMWA-TV/nmos-discovery-registration) (IS-04)
-* The [NMOS Connection Management Specification](https://github.com/AMWA-TV/nmos-device-connection-management) (IS-05)
+* The [overview of Networked Media Open Specifications](https://specs.amwa.tv/nmos)
+* The [NMOS Discovery and Registration Specification](https://specs.amwa.tv/is-04) (IS-04)
+* The [NMOS Connection Management Specification](https://specs.amwa.tv/is-05) (IS-05)
 
 Readers should then read the [documentation](docs/), [APIs](APIs/) (RAML and JSON Schema), and [examples](examples/) (JSON) 
 
