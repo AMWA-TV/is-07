@@ -9,7 +9,7 @@ This repository contains details of this AMWA Specification, including message t
 
 Readers are advised to be familiar with:
 
-* The [JT-NM Reference Architecture](http://jt-nm.org/RA-1.0/)
+* The [JT-NM Reference Architecture](http://jt-nm.org/reference-architecture/)
 * The [overview of Networked Media Open Specifications](https://specs.amwa.tv/nmos)
 * The [NMOS Discovery and Registration Specification](https://specs.amwa.tv/is-04) (IS-04)
 * The [NMOS Connection Management Specification](https://specs.amwa.tv/is-05) (IS-05)
