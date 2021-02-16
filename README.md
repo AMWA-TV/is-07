@@ -3,7 +3,7 @@
 [![Lint Status](https://github.com/AMWA-TV/nmos-event-tally/workflows/Lint/badge.svg)](https://github.com/AMWA-TV/nmos-event-tally/actions?query=workflow%3ALint)
 [![Render Status](https://github.com/AMWA-TV/nmos-event-tally/workflows/Render/badge.svg)](https://github.com/AMWA-TV/nmos-event-tally/actions?query=workflow%3ARender)
 
-[//]: # "INTRO-START"
+<!-- INTRO-START -->
 
 ### What does it do?
 
@@ -22,7 +22,7 @@
 - Lightweight messages sent using WebSockets or MQTT
 - Message flows connected using IS-05
 
-[//]: # "INTRO-END"
+<!-- INTRO-END -->
 
 ## Getting started
 
