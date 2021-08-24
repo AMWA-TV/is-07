@@ -2,9 +2,9 @@
 
 _(c) AMWA 2018, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
-This document describes the guidelines on how to use measurement units when defining a measurement event type (see [Event types - measurements](3.0.%20Event%20types.md#231-measurements)).
+This document describes the guidelines on how to use measurement units when defining a measurement event type (see [Event types - measurements](Event%20types.md#231-measurements)).
 
-Other sections can be accessed from the [Overview](1.0.%20Overview.md).
+Other sections can be accessed from the [Overview](Overview.md).
 
 ## 1. Introduction
 

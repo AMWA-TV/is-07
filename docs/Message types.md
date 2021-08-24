@@ -4,7 +4,7 @@ _(c) AMWA 2018, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
 This document specifies the supported message types and the strategies employed to define them.
 
-Other sections can be accessed from the [Overview](1.0.%20Overview.md).
+Other sections can be accessed from the [Overview](Overview.md).
 
 ## 1. Introduction
 
@@ -23,7 +23,7 @@ For the MQTT transport, the publishing topic is specified below for each message
 
 ### 1.1. The state message type
 
-The `state` message type is always sent when the emitter changes state and issues a new event, and is also used in response to a REST API query for the state via the [Events API](6.0.%20Event%20and%20tally%20rest%20api.md).  
+The `state` message type is always sent when the emitter changes state and issues a new event, and is also used in response to a REST API query for the state via the [Events API](Event%20and%20tally%20rest%20api.md).  
 These will be the predominant message types being sent in an Event & Tally system.
 With the MQTT transport, this message must use the `broker_topic` parameter as the publishing topic. The *RETAIN flag* must be set.
 
@@ -64,7 +64,7 @@ The `"action_timestamp"` represents the timestamp at which an event should be tr
 
 The `"action_timestamp"` is not intended to be associated with delays of more than a few seconds, not for example to allow events scheduled in the future, it allows synchronisation of events in complex workflows.
 
-The payload depends on the associated event type (see [Event types](3.0.%20Event%20types.md)).
+The payload depends on the associated event type (see [Event types](Event%20types.md)).
 
 The `flow_id` will _NOT_ be included in the response to a REST API query for the state via the Events API because the state is held by the source which has no dependency on a flow. It will, however, appear when being sent through one of the two specified transports because it will pass from the source through a flow and out on the network through the sender.
 
@@ -129,7 +129,7 @@ The `"creation_timestamp"` represents the timestamp at which the emitter establi
 ### 1.4. The connection status message type
 
 The `connection_status` message is used to indicate the status of the connection between the MQTT client and the broker.
-It is only used with the [MQTT transport](5.1.%20Transport%20-%20MQTT.md)).
+It is only used with the [MQTT transport](Transport%20-%20MQTT.md)).
 Support for connection status messages is recommended.
 The `connection_status_broker_topic` parameter is `null` if connection status messages are not used.
 
@@ -166,7 +166,7 @@ For more information about *Will Messages* consult the MQTT specification and ot
 
 ### 1.5. The health message type
 
-The `health` message will only be sent on a WebSocket connection as a response to a `health` command see [WebSocket transport](5.2.%20Transport%20-%20Websocket.md).
+The `health` message will only be sent on a WebSocket connection as a response to a `health` command see [WebSocket transport](Transport%20-%20Websocket.md).
 
 Receivers can detect missing `health` responses (no `health` response is sent back within 5 seconds) and after a 12 seconds timeout (two consecutive missed `health` responses plus 2 seconds to allow for latencies) may attempt to reconnect to the WebSocket and re-initialise the subscriptions list.
 

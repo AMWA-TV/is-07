@@ -4,7 +4,7 @@ _(c) AMWA 2018, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
 This document describes the use of the Events API.
 
-Other sections can be accessed from the [Overview](1.0.%20Overview.md).
+Other sections can be accessed from the [Overview](Overview.md).
 
 ## 1. Introduction
 

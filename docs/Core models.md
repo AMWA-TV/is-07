@@ -4,14 +4,14 @@ _(c) AMWA 2018, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
 This document specifies the core models and strategies employed.
 
-Other sections can be accessed from the [Overview](1.0.%20Overview.md).
+Other sections can be accessed from the [Overview](Overview.md).
 
 ## 1. Introduction
 
 The following transports are supported:
 
-* [MQTT](5.1.%20Transport%20-%20MQTT.md)
-* [WebSocket](5.2.%20Transport%20-%20Websocket.md)
+* [MQTT](Transport%20-%20MQTT.md)
+* [WebSocket](Transport%20-%20Websocket.md)
 
 The v1.0 specification relies on the following existing specifications:
 
@@ -106,7 +106,7 @@ Example:
 
 ### 2.4. Receivers
 
-Event receivers have a new array called `event_types` inside the `caps` field in order to list all of the event types they can consume (more details in [Event types](3.0.%20Event%20types.md)).  
+Event receivers have a new array called `event_types` inside the `caps` field in order to list all of the event types they can consume (more details in [Event types](Event%20types.md)).  
 Event receivers use the `urn:x-nmos:format:data` format and if the `media_types` array is present inside the `caps` field, it must include `application/json`.
 
 The supported transports have been extended to include:
@@ -146,7 +146,7 @@ Example:
 
 ## 3. NMOS Parameter Registers highlights
 
-Event devices have an additional control in the `controls` array for the Events API (see [Events API](6.0.%20Event%20and%20tally%20rest%20api.md)).
+Event devices have an additional control in the `controls` array for the Events API (see [Events API](Event%20and%20tally%20rest%20api.md)).
 
 The definition for this control is detailed with an entry in the NMOS Parameter Registers.
 
@@ -222,7 +222,7 @@ All of the `ext_` transport parameters mentioned in the previous sections follow
 
 #### ext_is_07_rest_api_url
 
-The `ext_is_07_rest_api_url` parameter represents the URL to the Events API resource which offers the current state and type of an event emitter (source) (see [Events API](6.0.%20Event%20and%20tally%20rest%20api.md))
+The `ext_is_07_rest_api_url` parameter represents the URL to the Events API resource which offers the current state and type of an event emitter (source) (see [Events API](Event%20and%20tally%20rest%20api.md))
 
 The sender should populate the `ext_is_07_rest_api_url` field by starting with the `href` offered by the `urn:x-nmos:control:events/v1.0` control in the `controls` array of the IS-04 device associated with the sender.
 The sender should append the relative path `sources/{source_id}/`, where the `source_id` is the unique ID of the source associated with the sender (see `ext_is_07_source_id`).
@@ -242,4 +242,4 @@ The `ext_is_07_source_id` transport parameter represents the source id which is 
 
 Event & Tally connection management only supports IS-05 connection management (the legacy IS-04 connection management is not supported and deprecated).
 
-The usage of the transport parameters identified in the previous sections is detailed in each [transport](5.0.%20Transports.md) section and in the [Events API](6.0.%20Event%20and%20tally%20rest%20api.md) section.
+The usage of the transport parameters identified in the previous sections is detailed in each [transport](Transports.md) section and in the [Events API](Event%20and%20tally%20rest%20api.md) section.

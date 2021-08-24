@@ -4,7 +4,7 @@ _(c) AMWA 2018, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
 This document describes the use of the WebSocket transport.
 
-Other sections can be accessed from the [Overview](1.0.%20Overview.md).
+Other sections can be accessed from the [Overview](Overview.md).
 
 ## 1. Introduction
 
@@ -48,7 +48,7 @@ For senders and receivers that do not support both modes, the IS-05 constraints 
 
 ### 3.3 ext_is_07_rest_api_url
 
-The `ext_is_07_rest_api_url` transport parameter represents the URL to the Events API resource which offers the current state and type of an event emitter (source) (see [Events API](6.0.%20Event%20and%20tally%20rest%20api.md))
+The `ext_is_07_rest_api_url` transport parameter represents the URL to the Events API resource which offers the current state and type of an event emitter (source) (see [Events API](Event%20and%20tally%20rest%20api.md))
 
 For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter.
 For a receiver, an empty constraint object may be appropriate for this parameter.
@@ -104,7 +104,7 @@ A `subscription` command is only sent as a consequence of an NMOS Connection Man
 
 ### 4.1 Heartbeats
 
-Upon connection, the client is required to report its health every 5 seconds in order to maintain its connection and subscription. This is similar to the behaviour required by the registry for nodes in IS-04 specification. Every `health` command should be followed by a `health` response (see [Message types](2.0.%20Message%20types.md)).
+Upon connection, the client is required to report its health every 5 seconds in order to maintain its connection and subscription. This is similar to the behaviour required by the registry for nodes in IS-04 specification. Every `health` command should be followed by a `health` response (see [Message types](Message%20types.md)).
 
 The server is expected to check `health` commands and after a 12 seconds timeout (2 consecutive missed `health` commands plus 2 seconds to allow for latencies) it should clear the subscriptions for that particular client and close the WebSocket connection. The server is also required to respond to a heartbeat within 5 seconds of receiving the `health` command.
 
