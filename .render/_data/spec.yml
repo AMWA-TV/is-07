@@ -1,0 +1,11 @@
+amwa_id: IS-07
+url: https://specs.amwa.tv/is-07
+name: Event & Tally
+status: AMWA Specification
+repo_name: is-07
+alt_repo_name: nmos-event-tally
+repo_url: https://github.com/AMWA-TV/is-07
+releases:
+  - v1.0.1
+default_branch: v1.0.x
+show_in_index: true
