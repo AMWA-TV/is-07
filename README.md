@@ -1,7 +1,7 @@
 # AMWA IS-07 NMOS Event & Tally Specification
 
-[![Lint Status](https://github.com/AMWA-TV/nmos-event-tally/workflows/Lint/badge.svg)](https://github.com/AMWA-TV/nmos-event-tally/actions?query=workflow%3ALint)
-[![Render Status](https://github.com/AMWA-TV/nmos-event-tally/workflows/Render/badge.svg)](https://github.com/AMWA-TV/nmos-event-tally/actions?query=workflow%3ARender)
+[![Lint Status](https://github.com/AMWA-TV/is-07/workflows/Lint/badge.svg)](https://github.com/AMWA-TV/is-07/actions?query=workflow%3ALint)
+[![Render Status](https://github.com/AMWA-TV/is-07/workflows/Render/badge.svg)](https://github.com/AMWA-TV/is-07/actions?query=workflow%3ARender)
 
 <!-- INTRO-START -->
 
