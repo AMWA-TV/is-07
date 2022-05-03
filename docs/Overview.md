@@ -12,11 +12,11 @@ The purpose of the Event & Tally specification is to provide a mechanism by whic
 
 The specification is split into the following sections:
 
-* [Message types](2.0.%20Message%20types.md)
-* [Event types](3.0.%20Event%20types.md)
-* [Core models](4.0.%20Core%20models.md)
-* [Transports](5.0.%20Transports.md)
-  * [MQTT](5.1.%20Transport%20-%20MQTT.md)
-  * [WebSocket](5.2.%20Transport%20-%20Websocket.md)
-* [Events API](6.0.%20Event%20and%20tally%20rest%20api.md)
-* [Measurement units guidelines](7.0.%20Measurement%20units%20guidelines.md)
+* [Message types](Message%20types.md)
+* [Event types](Event%20types.md)
+* [Core models](Core%20models.md)
+* [Transports](Transports.md)
+  * [MQTT](Transport%20-%20MQTT.md)
+  * [WebSocket](Transport%20-%20Websocket.md)
+* [Events API](Event%20and%20tally%20rest%20api.md)
+* [Measurement units guidelines](Measurement%20units%20guidelines.md)

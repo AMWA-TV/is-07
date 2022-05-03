@@ -7,9 +7,9 @@ Both of these transports shall be supported by any valid IS-07 implementation wi
 Any IS-07 viable product should have both transport options as mandatory capabilities which can be turned on/off operationally.  
 For clarity the minimum requirement is that both transports can be made operational. Optionally the product may allow the user to disable the operational use of one of the transports for processing/memory savings.
 
-Other sections can be accessed from the [Overview](1.0.%20Overview.md).
+Other sections can be accessed from the [Overview](Overview.md).
 
 Mandatory supported transports:
 
-* [MQTT](5.1.%20Transport%20-%20MQTT.md)
-* [WebSocket](5.2.%20Transport%20-%20Websocket.md)
+* [MQTT](Transport%20-%20MQTT.md)
+* [WebSocket](Transport%20-%20Websocket.md)

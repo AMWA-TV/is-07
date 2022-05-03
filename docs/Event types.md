@@ -4,7 +4,7 @@ _(c) AMWA 2018, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
 This document specifies the supported event types and the strategies employed to define them.
 
-Other sections can be accessed from the [Overview](1.0.%20Overview.md).
+Other sections can be accessed from the [Overview](Overview.md).
 
 ## 1. Introduction
 
@@ -16,7 +16,7 @@ These are the supported event types:
 * enum
 * object (out of scope for version 1.0 of this specification)
 
-The types are identified by the corresponding values in the `event_type` field in an event message and the NMOS source. When additional restrictions are applied to an event type, the *type definition object* is provided using the Events API (see [Events API](6.0.%20Event%20and%20tally%20rest%20api.md)). The type definition object always defines the type of the `value` field and can define restrictions on the value.
+The types are identified by the corresponding values in the `event_type` field in an event message and the NMOS source. When additional restrictions are applied to an event type, the *type definition object* is provided using the Events API (see [Events API](Event%20and%20tally%20rest%20api.md)). The type definition object always defines the type of the `value` field and can define restrictions on the value.
 
 Comparisons between `event_type` values must be case sensitive.
 
@@ -150,7 +150,7 @@ In the case where a unit of measure is specified for the number type, the event 
 
 The definition of the units of measure is out of scope of this specification but the SI system of units is highly recommended.
 
-The recommended strategy for naming measurement units can be read in the [Measurement units guidelines](7.0.%20Measurement%20units%20guidelines.md) section.
+The recommended strategy for naming measurement units can be read in the [Measurement units guidelines](Measurement%20units%20guidelines.md) section.
 
 #### _Example_:
 
@@ -395,7 +395,7 @@ Receivers `"event_types"` field can have a specific event type or may have a der
 
 A wildcard (`*`) must replace a whole word and can only be used at the end of an event type definition.
 
-More details about NMOS resources in the section [Core models](4.0.%20Core%20models.md).
+More details about NMOS resources in the section [Core models](Core%20models.md).
 
 The wildcard allows a smart receiver to advertise a wider capability with a specific category above. This is useful information when building a user interface which handles connection management but also matches capabilities between senders and receivers.
 

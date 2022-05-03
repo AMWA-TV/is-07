@@ -4,7 +4,7 @@ _(c) AMWA 2018, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
 This document describes the use of the MQTT transport.
 
-Other sections can be accessed from the [Overview](1.0.%20Overview.md).
+Other sections can be accessed from the [Overview](Overview.md).
 
 ## 1. Introduction
 
@@ -39,7 +39,7 @@ The `broker_topic` parameter holds the MQTT topic for the source associated with
 For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter.
 For a receiver, an empty constraint object may be appropriate for this parameter.
 
-Message types (see [Message types](2.0.%20Message%20types.md)) which use this parameter as the publishing topic:
+Message types (see [Message types](Message%20types.md)) which use this parameter as the publishing topic:
 
 * State
 * Reboot
@@ -62,7 +62,7 @@ The `{connectionId}` can be one of the following:
 For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter.
 For a receiver, an empty constraint object may be appropriate for this parameter.
 
-Message types (see [Message types](2.0.%20Message%20types.md)) which use this parameter as the publishing topic:
+Message types (see [Message types](Message%20types.md)) which use this parameter as the publishing topic:
 
 * Connection status
 
@@ -87,7 +87,7 @@ For senders and receivers that do not support both modes, the IS-05 constraints 
 
 ### 3.6 ext_is_07_rest_api_url
 
-The `ext_is_07_rest_api_url` parameter represents the URL to the Events API resource which offers the current state and type of an event emitter (source) (see [Events API](6.0.%20Event%20and%20tally%20rest%20api.md))
+The `ext_is_07_rest_api_url` parameter represents the URL to the Events API resource which offers the current state and type of an event emitter (source) (see [Events API](Event%20and%20tally%20rest%20api.md))
 
 For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter.
 For a receiver, an empty constraint object may be appropriate for this parameter.
@@ -163,7 +163,7 @@ Consumers (receivers) have a choice to either use the retained message or query 
 
 ## 6. MQTT Will Message
 
-All event emitters (MQTT publishers) that publish `connection_status` messages must specify a retained *Will Message* using the `connection_status_broker_topic` parameter as the publishing topic, as described in [Message types - The connection status message type](2.0.%20Message%20types.md#14-the-connection-status-message-type).
+All event emitters (MQTT publishers) that publish `connection_status` messages must specify a retained *Will Message* using the `connection_status_broker_topic` parameter as the publishing topic, as described in [Message types - The connection status message type](Message%20types.md#14-the-connection-status-message-type).
 
 ## 7. Broker discovery
 
