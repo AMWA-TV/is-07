@@ -1,0 +1,20 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/number.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Number",
+  "type": "object",
+  "required": [
+    "value"
+  ],
+  "properties": {
+    "value": {
+      "description": "Number value",
+      "type": "number"
+    },
+    "scale": {
+      "description": "Denominator for rational number representation (default = 1)",
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/type_number.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition for the number type",
+  "title": "Number Type",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "min",
+    "max"
+  ],
+  "properties": {
+    "type": {
+      "description": "Base type name",
+      "type": "string",
+      "enum": [
+        "number"
+      ]
+    },
+    "scale": {
+      "description": "Denominator typically used for rational numbers in the event payload",
+      "type": "integer",
+      "minimum": 1
+    },
+    "min": {
+      "$id": "https://www.amwa.tv/event_and_tally/number.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description": "Number",
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "description": "Number value",
+          "type": "number"
+        },
+        "scale": {
+          "description": "Denominator for rational number representation (default = 1)",
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "max": {
+      "$id": "https://www.amwa.tv/event_and_tally/number.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description": "Number",
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "description": "Number value",
+          "type": "number"
+        },
+        "scale": {
+          "description": "Denominator for rational number representation (default = 1)",
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "step": {
+      "$id": "https://www.amwa.tv/event_and_tally/number.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description": "Number",
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "description": "Number value",
+          "type": "number"
+        },
+        "scale": {
+          "description": "Denominator for rational number representation (default = 1)",
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "unit": {
+      "description": "Unit of measure",
+      "type": "string"
+    }
+  }
+}

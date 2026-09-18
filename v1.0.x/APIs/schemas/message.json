@@ -1,0 +1,16 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/message.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Allowed messages (communication from the sender to the receiver)",
+  "title": "Message",
+  "oneOf": [{
+    "$ref": "event.json"
+  }, {
+    "$ref": "message_connection_status.json"
+  }, {
+    "$ref": "message_health.json"
+  }, {
+    "$ref": "message_shutdown_reboot.json"
+  }]
+}

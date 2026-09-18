@@ -1,0 +1,528 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/message.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Allowed messages (communication from the sender to the receiver)",
+  "title": "Message",
+  "oneOf": [
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/event.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Message that gets sent out when the source state changes",
+      "title": "State change event",
+      "oneOf": [
+        {
+          "$id": "https://www.amwa.tv/event_and_tally/event_boolean.json",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object",
+          "description": "Describes an event with boolean payload",
+          "title": "Boolean event",
+          "allOf": [
+            {
+              "$id": "https://www.amwa.tv/event_and_tally/event_core.json",
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "description": "Message that gets sent out when the source state changes",
+              "title": "State change event",
+              "required": [
+                "identity",
+                "timing",
+                "event_type",
+                "payload",
+                "message_type"
+              ],
+              "properties": {
+                "message_type": {
+                  "description": "A fixed string showing this is a state message",
+                  "type": "string",
+                  "pattern": "^state$"
+                },
+                "identity": {
+                  "description": "Object describing event identity",
+                  "type": "object",
+                  "required": [
+                    "source_id"
+                  ],
+                  "properties": {
+                    "source_id": {
+                      "description": "ID of the source that holds the state that has changed",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    "flow_id": {
+                      "description": "ID of the flow carrying the message",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    }
+                  }
+                },
+                "timing": {
+                  "description": "Object describing event timing",
+                  "type": "object",
+                  "required": [
+                    "creation_timestamp"
+                  ],
+                  "properties": {
+                    "creation_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message was created",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    },
+                    "origin_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message that triggered this message (if any) was created",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    },
+                    "action_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the state change described in the event took or will take place",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "event_type",
+                "payload"
+              ],
+              "properties": {
+                "event_type": {
+                  "description": "Event type",
+                  "type": "string",
+                  "pattern": "^boolean(\\/[^\\s\\/]+)*$"
+                },
+                "payload": {
+                  "description": "Boolean payload",
+                  "type": "object",
+                  "required": [
+                    "value"
+                  ],
+                  "properties": {
+                    "value": {
+                      "description": "Boolean value",
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "$id": "https://www.amwa.tv/event_and_tally/event_number.json",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object",
+          "description": "Describes an event with Number payload",
+          "title": "Number event",
+          "allOf": [
+            {
+              "$id": "https://www.amwa.tv/event_and_tally/event_core.json",
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "description": "Message that gets sent out when the source state changes",
+              "title": "State change event",
+              "required": [
+                "identity",
+                "timing",
+                "event_type",
+                "payload",
+                "message_type"
+              ],
+              "properties": {
+                "message_type": {
+                  "description": "A fixed string showing this is a state message",
+                  "type": "string",
+                  "pattern": "^state$"
+                },
+                "identity": {
+                  "description": "Object describing event identity",
+                  "type": "object",
+                  "required": [
+                    "source_id"
+                  ],
+                  "properties": {
+                    "source_id": {
+                      "description": "ID of the source that holds the state that has changed",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    "flow_id": {
+                      "description": "ID of the flow carrying the message",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    }
+                  }
+                },
+                "timing": {
+                  "description": "Object describing event timing",
+                  "type": "object",
+                  "required": [
+                    "creation_timestamp"
+                  ],
+                  "properties": {
+                    "creation_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message was created",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    },
+                    "origin_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message that triggered this message (if any) was created",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    },
+                    "action_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the state change described in the event took or will take place",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "event_type",
+                "payload"
+              ],
+              "properties": {
+                "event_type": {
+                  "description": "Event type",
+                  "type": "string",
+                  "pattern": "^number(\\/[^\\s\\/]+)*$"
+                },
+                "payload": {
+                  "$id": "https://www.amwa.tv/event_and_tally/number.json",
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "description": "Number",
+                  "type": "object",
+                  "required": [
+                    "value"
+                  ],
+                  "properties": {
+                    "value": {
+                      "description": "Number value",
+                      "type": "number"
+                    },
+                    "scale": {
+                      "description": "Denominator for rational number representation (default = 1)",
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "$id": "https://www.amwa.tv/event_and_tally/event_string.json",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object",
+          "description": "Describes an event with string payload",
+          "title": "String event",
+          "allOf": [
+            {
+              "$id": "https://www.amwa.tv/event_and_tally/event_core.json",
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "description": "Message that gets sent out when the source state changes",
+              "title": "State change event",
+              "required": [
+                "identity",
+                "timing",
+                "event_type",
+                "payload",
+                "message_type"
+              ],
+              "properties": {
+                "message_type": {
+                  "description": "A fixed string showing this is a state message",
+                  "type": "string",
+                  "pattern": "^state$"
+                },
+                "identity": {
+                  "description": "Object describing event identity",
+                  "type": "object",
+                  "required": [
+                    "source_id"
+                  ],
+                  "properties": {
+                    "source_id": {
+                      "description": "ID of the source that holds the state that has changed",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    "flow_id": {
+                      "description": "ID of the flow carrying the message",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    }
+                  }
+                },
+                "timing": {
+                  "description": "Object describing event timing",
+                  "type": "object",
+                  "required": [
+                    "creation_timestamp"
+                  ],
+                  "properties": {
+                    "creation_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message was created",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    },
+                    "origin_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message that triggered this message (if any) was created",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    },
+                    "action_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the state change described in the event took or will take place",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "event_type",
+                "payload"
+              ],
+              "properties": {
+                "event_type": {
+                  "description": "Event type",
+                  "type": "string",
+                  "pattern": "^string(\\/[^\\s\\/]+)*$"
+                },
+                "payload": {
+                  "description": "String payload",
+                  "type": "object",
+                  "required": [
+                    "value"
+                  ],
+                  "properties": {
+                    "value": {
+                      "description": "String value",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "$id": "https://www.amwa.tv/event_and_tally/event_object.json",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object",
+          "description": "Describes an event with object payload",
+          "title": "Object event",
+          "allOf": [
+            {
+              "$id": "https://www.amwa.tv/event_and_tally/event_core.json",
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "description": "Message that gets sent out when the source state changes",
+              "title": "State change event",
+              "required": [
+                "identity",
+                "timing",
+                "event_type",
+                "payload",
+                "message_type"
+              ],
+              "properties": {
+                "message_type": {
+                  "description": "A fixed string showing this is a state message",
+                  "type": "string",
+                  "pattern": "^state$"
+                },
+                "identity": {
+                  "description": "Object describing event identity",
+                  "type": "object",
+                  "required": [
+                    "source_id"
+                  ],
+                  "properties": {
+                    "source_id": {
+                      "description": "ID of the source that holds the state that has changed",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    "flow_id": {
+                      "description": "ID of the flow carrying the message",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    }
+                  }
+                },
+                "timing": {
+                  "description": "Object describing event timing",
+                  "type": "object",
+                  "required": [
+                    "creation_timestamp"
+                  ],
+                  "properties": {
+                    "creation_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message was created",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    },
+                    "origin_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message that triggered this message (if any) was created",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    },
+                    "action_timestamp": {
+                      "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the state change described in the event took or will take place",
+                      "type": "string",
+                      "pattern": "^[0-9]+:[0-9]+$"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "event_type",
+                "payload"
+              ],
+              "properties": {
+                "event_type": {
+                  "description": "Event type",
+                  "type": "string",
+                  "pattern": "^object(\\/[^\\s\\/]+)*$"
+                },
+                "payload": {
+                  "description": "Object payload",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/message_connection_status.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Message that indicates the status of the connection between the MQTT client and the broker. If connection status messages are used, the publishing topic is connection specific and must be specified in the connection_status_broker_topic parameter of the MQTT IS-05 transport parameters object. The client must publish this message with the RETAIN flag set, after opening the connection to the broker and before closing the connection normally. The client must also configure a retained Will Message indicating it is disconnected.",
+      "title": "Connection status message",
+      "required": [
+        "message_type",
+        "active"
+      ],
+      "properties": {
+        "message_type": {
+          "description": "A fixed string showing this is a connection status message",
+          "type": "string",
+          "pattern": "^connection_status$"
+        },
+        "active": {
+          "description": "A boolean value showing whether the MQTT client is connected to the broker.",
+          "type": "boolean"
+        }
+      }
+    },
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/message_health.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Message that gets sent out as the response to a health (heartbeat) command",
+      "title": "Health message",
+      "required": [
+        "timing",
+        "message_type"
+      ],
+      "properties": {
+        "message_type": {
+          "description": "A fixed string showing this is a health message",
+          "type": "string",
+          "pattern": "^health$"
+        },
+        "timing": {
+          "description": "Object describing event timing",
+          "type": "object",
+          "required": [
+            "creation_timestamp",
+            "origin_timestamp"
+          ],
+          "properties": {
+            "creation_timestamp": {
+              "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message was created",
+              "type": "string",
+              "pattern": "^[0-9]+:[0-9]+$"
+            },
+            "origin_timestamp": {
+              "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) copied from the incoming health command",
+              "type": "string",
+              "pattern": "^[0-9]+:[0-9]+$"
+            }
+          }
+        }
+      }
+    },
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/message_shutdown_reboot.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Message that gets sent out when the device start a shutdown or reboot process",
+      "title": "Shutdown and reboot message",
+      "required": [
+        "identity",
+        "timing",
+        "message_type"
+      ],
+      "properties": {
+        "message_type": {
+          "description": "A fixed string showing this is a reboot or a shutdown message",
+          "type": "string",
+          "pattern": "^reboot|shutdown$"
+        },
+        "identity": {
+          "description": "Object describing event identity",
+          "type": "object",
+          "required": [
+            "source_id"
+          ],
+          "properties": {
+            "source_id": {
+              "description": "ID of the source which identifies the emitter of the event",
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            },
+            "flow_id": {
+              "description": "ID of the flow carrying the message",
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        },
+        "timing": {
+          "description": "Object describing event timing",
+          "type": "object",
+          "required": [
+            "creation_timestamp"
+          ],
+          "properties": {
+            "creation_timestamp": {
+              "description": "String formatted TAI timestamp (<seconds>:<nanoseconds>) indicating when the message was created",
+              "type": "string",
+              "pattern": "^[0-9]+:[0-9]+$"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
