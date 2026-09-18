@@ -4,6 +4,33 @@
         <loc>https://specs.amwa.tv/new/is-07/v1.0.x/</loc>
       </url>
       <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Overview/</loc>
+      </url>
+      <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Message%20types/</loc>
+      </url>
+      <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Event%20types/</loc>
+      </url>
+      <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Core%20models/</loc>
+      </url>
+      <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Transports/</loc>
+      </url>
+      <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Transport%20-%20MQTT/</loc>
+      </url>
+      <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Transport%20-%20Websocket/</loc>
+      </url>
+      <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Event%20and%20tally%20rest%20api/</loc>
+      </url>
+      <url>
+        <loc>https://specs.amwa.tv/new/is-07/v1.0.x/Measurement%20units%20guidelines/</loc>
+      </url>
+      <url>
         <loc>https://specs.amwa.tv/new/is-07/v1.0.x/APIs/</loc>
       </url>
       <url>
