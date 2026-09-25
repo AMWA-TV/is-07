@@ -1,0 +1,4 @@
+{
+"command": "health",
+"timestamp": "1441974485:123000000"
+}

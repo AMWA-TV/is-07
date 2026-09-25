@@ -1,0 +1,20 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/type_boolean.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition for the boolean type",
+  "title": "Boolean Type",
+  "additionalProperties": false,
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "description": "Base type name",
+      "type": "string",
+      "enum": [
+        "boolean"
+      ]
+    }
+  }
+}

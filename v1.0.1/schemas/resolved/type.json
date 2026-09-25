@@ -1,0 +1,298 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/type.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition",
+  "title": "Type definition",
+  "oneOf": [
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/type_boolean.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Type definition for the boolean type",
+      "title": "Boolean Type",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Base type name",
+          "type": "string",
+          "enum": [
+            "boolean"
+          ]
+        }
+      }
+    },
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/type_boolean_enum.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Type definition for the boolean enum type",
+      "title": "Boolean Enum Type",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "values"
+      ],
+      "properties": {
+        "type": {
+          "description": "Base type name",
+          "type": "string",
+          "enum": [
+            "boolean"
+          ]
+        },
+        "values": {
+          "description": "List of allowed values",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "title": "Enum Element",
+            "required": [
+              "value",
+              "label",
+              "description"
+            ],
+            "properties": {
+              "value": {
+                "description": "Enum value",
+                "type": "boolean"
+              },
+              "label": {
+                "description": "Enum label",
+                "type": "string"
+              },
+              "description": {
+                "description": "Enum description",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/type_number.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Type definition for the number type",
+      "title": "Number Type",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "min",
+        "max"
+      ],
+      "properties": {
+        "type": {
+          "description": "Base type name",
+          "type": "string",
+          "enum": [
+            "number"
+          ]
+        },
+        "scale": {
+          "description": "Denominator typically used for rational numbers in the event payload",
+          "type": "integer",
+          "minimum": 1
+        },
+        "min": {
+          "$id": "https://www.amwa.tv/event_and_tally/number.json",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "description": "Number",
+          "type": "object",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "description": "Number value",
+              "type": "number"
+            },
+            "scale": {
+              "description": "Denominator for rational number representation (default = 1)",
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "max": {
+          "$id": "https://www.amwa.tv/event_and_tally/number.json",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "description": "Number",
+          "type": "object",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "description": "Number value",
+              "type": "number"
+            },
+            "scale": {
+              "description": "Denominator for rational number representation (default = 1)",
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "step": {
+          "$id": "https://www.amwa.tv/event_and_tally/number.json",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "description": "Number",
+          "type": "object",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "description": "Number value",
+              "type": "number"
+            },
+            "scale": {
+              "description": "Denominator for rational number representation (default = 1)",
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "unit": {
+          "description": "Unit of measure",
+          "type": "string"
+        }
+      }
+    },
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/type_number_enum.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Type definition for the number enum type",
+      "title": "Number Enum Type",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "values"
+      ],
+      "properties": {
+        "type": {
+          "description": "Base type name",
+          "type": "string",
+          "enum": [
+            "number"
+          ]
+        },
+        "values": {
+          "description": "List of allowed values",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "title": "Enum Element",
+            "required": [
+              "value",
+              "label",
+              "description"
+            ],
+            "properties": {
+              "value": {
+                "description": "Enum value",
+                "type": "number"
+              },
+              "label": {
+                "description": "Enum label",
+                "type": "string"
+              },
+              "description": {
+                "description": "Enum description",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/type_string.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Type definition for the string type",
+      "title": "String Type",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Base type name",
+          "type": "string",
+          "enum": [
+            "string"
+          ]
+        },
+        "min_length": {
+          "description": "Minimum string length",
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_length": {
+          "description": "Maximum string length",
+          "type": "integer",
+          "minimum": 1
+        },
+        "pattern": {
+          "description": "Regular expression constraining the value",
+          "type": "string"
+        }
+      }
+    },
+    {
+      "$id": "https://www.amwa.tv/event_and_tally/type_string_enum.json",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "description": "Type definition for the string enum type",
+      "title": "String Enum Type",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "values"
+      ],
+      "properties": {
+        "type": {
+          "description": "Base type name",
+          "type": "string",
+          "enum": [
+            "string"
+          ]
+        },
+        "values": {
+          "description": "List of allowed values",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "title": "Enum Element",
+            "required": [
+              "value",
+              "label",
+              "description"
+            ],
+            "properties": {
+              "value": {
+                "description": "Enum value",
+                "type": "string"
+              },
+              "label": {
+                "description": "Enum label",
+                "type": "string"
+              },
+              "description": {
+                "description": "Enum description",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

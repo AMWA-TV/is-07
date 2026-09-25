@@ -1,0 +1,414 @@
+{
+  "version": 1,
+  "repository": "AMWA-TV/is-07",
+  "documents": [
+    {
+      "title": "AMWA NMOS Event & Tally Specification: Overview",
+      "url": "https://specs.amwa.tv/new/is-07/latest/1.0.%20Overview/",
+      "text": "AMWA NMOS Event & Tally Specification: Overview AMWA NMOS Event & Tally Specification: Overview 1. Documentation 2. Introduction AMWA NMOS Event & Tally Specification: Overview - AMWA IS-07 NMOS Event & Tally Specification Skip to content AMWA NMOS Event & Tally Specification: Overview (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) 1. Documentation The documents included in this directory provide additional details and recommendations for implementations of the defined API, and its consumers. 2. Introduction The purpose of the Event & Tally specification is to provide a mechanism by which to emit and consume states and state changes issued by sources (sensors, actuators etc). This is by no means a control API and controlling or sending commands to a receiver is out of scope. States sent need to be for general consumption which is to say they should not be sent with a specific receiver in mind (all states need to be consumable by any compatible receiver). The specification is split into the following sections: Message types Event types Core models Transports MQTT WebSocket Events API Measurement units guidelines",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "Message types",
+      "url": "https://specs.amwa.tv/new/is-07/latest/2.0.%20Message%20types/",
+      "text": "Message types Message types 1. Introduction 1.1. The state message type 1.2. The reboot message type 1.3. The shutdown message type 1.4. The connection status message type 1.5. The health message type Message types - AMWA IS-07 NMOS Event & Tally Specification Skip to content Message types (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) This document specifies the supported message types and the strategies employed to define them. Other sections can be accessed from the Overview . 1. Introduction The main concern of the Event & Tally specification is to make possible for emitters to transmit their state changes to any interested consumer. A secondary concern is to give connected entities a mechanism by which to highlight issues in the linkage between them. In order to address this concern the message_type field is included in every single event message being sent. These are the supported message types: state reboot shutdown connection status (only used by MQTT connections) health (only used by WebSocket connections) For the MQTT transport, the publishing topic is specified below for each message type. 1.1. The state message type The state message type is always sent when the emitter changes state and issues a new event, and is also used in response to a REST API query for the state via the Events API . These will be the predominant message types being sent in an Event & Tally system. With the MQTT transport, this message must use the broker_topic parameter as the publishing topic. The RETAIN flag should be set. The message structure shall have the following items: identity [mandatory] event_type [mandatory] timing [mandatory with some optional fields] payload [mandatory] message_type [mandatory] Message structure { \"identity\" : { \"source_id\" : \"6cbd0441-7882-44cd-9557-842243a0d618\" , \"flow_id\" : \"ff455cf3-fb17-448b-8f4c-e6c0e294f5ed\" }, \"event_type\" : \"boolean\" , \"timing\" : { \"creation_timestamp\" : \"1531680501:280709600\" , \"origin_timestamp\" : \"1531680501:280401700\" , \"action_timestamp\" : \"1531680501:320000000\" }, \"payload\" : { \"value\" : true }, \"message_type\" : \"state\" } The \"creation_timestamp\" represents the timestamp at which an event has been created (for sensors this is the acquisition time). This field is mandatory. The \"origin_timestamp\" represents the timestamp which led to the creation of an event due to external factors (a trigger). This field is optional. The \"action_timestamp\" represents the timestamp at which an event should be treated or result in an action (for synchronising and dealing with delays). This field is optional. The \"action_timestamp\" is not intended to be associated with delays of more than a few seconds, not for example to allow events scheduled in the future, it allows synchronisation of events in complex workflows. The payload depends on the associated event type (see Event types ). The flow_id will NOT be included in the response to a REST API query for the state via the Events API because the state is held by the source which has no dependency on a flow. It will, however, appear when being sent through one of the two specified transports because it will pass from the source through a flow and out on the network through the sender. 1.2. The reboot message type The reboot message type will only be sent when the event emitter (source) is going to experience a planned restart. This message will announce any connected consumers that the emitter will momentarily be unavailable. With the MQTT transport, this message must use the broker_topic parameter as the publishing topic. The RETAIN flag should not be set. The message structure shall have the following items: identity [mandatory] timing [mandatory] message_type [mandatory] Message structure { \"identity\" : { \"source_id\" : \"6cbd0441-7882-44cd-9557-842243a0d618\" , \"flow_id\" : \"ff455cf3-fb17-448b-8f4c-e6c0e294f5ed\" }, \"timing\" : { \"creation_timestamp\" : \"1531680501:280709600\" }, \"message_type\" : \"reboot\" } The \"creation_timestamp\" represents the timestamp at which the emitter established that a reboot action will follow. This field is mandatory. 1.3. The shutdown message type The shutdown message type will only be sent when the event emitter (sender) is going to experience a planned shutdown. This message will announce to any connected consumers that the emitter will become unavailable. With the MQTT transport, this message must use the broker_topic parameter as the publishing topic. The RETAIN flag should not be set. The message structure shall have the following items: identity [mandatory] timing [mandatory] message_type [mandatory] Message structure { \"identity\" : { \"source_id\" : \"6cbd0441-7882-44cd-9557-842243a0d618\" , \"flow_id\" : \"ff455cf3-fb17-448b-8f4c-e6c0e294f5ed\" }, \"timing\" : { \"creation_timestamp\" : \"1531680501:280709600\" }, \"message_type\" : \"shutdown\" } The \"creation_timestamp\" represents the timestamp at which the emitter established that a shutdown action will follow. This field is mandatory. 1.4. The connection status message type The connection_status message is used to indicate the status of the connection between the MQTT client and the broker. It is only used with the MQTT transport ). This message must use the connection_status_broker_topic parameter as the publishing topic. The RETAIN flag should be set. The message structure shall have the following items: active [mandatory] message_type [mandatory] Message structure { \"active\" : true , \"message_type\" : \"connection_status\" } The \"active\" flag indicates to subscribers whether the client has a connection to the broker. The client should publish this message with \"active\" set to true, after opening the connection to the broker. Similarly, the client should publish this message with \"active\" set to false, before closing the connection to the broker normally with a DISCONNECT packet . In order that this message is published even if the client's connection is not closed normally, the client should specify a retained Wi",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "Event types",
+      "url": "https://specs.amwa.tv/new/is-07/latest/3.0.%20Event%20types/",
+      "text": "Event types Event types 1. Introduction 2. Base types 2.1 boolean 2.2 string 2.3 number 2.3.1 measurements 3. enum 4. object (out of scope for version 1.0 of this specification) Event types capability management Event types - AMWA IS-07 NMOS Event & Tally Specification Skip to content Event types (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) This document specifies the supported event types and the strategies employed to define them. Other sections can be accessed from the Overview . 1. Introduction These are the supported event types: boolean string number enum object (out of scope for version 1.0 of this specification) The types are identified by the corresponding values in the event_type field in an event message and the NMOS source. When additional restrictions are applied to an event type, the type definition object is provided using the Events API (see Events API ). The type definition object always defines the type of the value field and can define restrictions on the value. Comparisons between event_type values must be case sensitive. 2. Base types The base type payloads always contain the \"value\" field and the type of the field in JSON corresponds to the base type. 2.1 boolean The boolean event type is identified as \"boolean\" in the NMOS source. Example : A simple button indicating its condition as a boolean value (is the button pressed) Event Type : boolean Payload : { \"value\" : true } or { \"value\" : false } Type definition : { \"type\" : \"boolean\" } 2.2 string The string event type is identified as \"string\" in the NMOS source. This event type is associated with a type definition object that is used to specify the following: minimum length [optional] maximum length [optional] pattern (regular expression) [optional] Example : A simple label on a button or on another UI element. Event Type : string Payload : { \"value\" : \"my label\" } Type definition : { \"type\" : \"string\" , \"min_length\" : 1 , \"max_length\" : 30 } 2.3 number The number event type is identified as \"number\" in the NMOS source. In addition to the mandatory value field, an optional scale field is introduced to help carrying rational numbers without any loss of precision. In that case the value field represents the numerator and the scale field represents the denominator of the fraction. This event type is associated with a type definition object that is used to specify the following: a scale field indicating the denominator typically used for rational numbers in the event payload [optional] minimum value [mandatory] maximum value [mandatory] step value [optional] (default = 1) measurement unit [optional] The value of the optional step field indicates the precision. The value of max - min should be an integer multiple of step (taking account the value and scale of each). Similarly, for each event, payload - min should be an integer multiple of step . The scale field of min , max , step , and each event payload , are typically the same. Payload examples: Example : A simple 32-bit counter. Event Type : number Payload : { \"value\" : 16342 } Type definition : { \"type\" : \"number\" , \"min\" : { \"value\" : 1 }, \"max\" : { \"value\" : 4294967295 } } 2.3.1 measurements In the case where a unit of measure is specified for the number type, the event type is identified as \"number/{Name}/{Unit}\" in the NMOS source, where {Name} is the name of the measurement and {Unit} is the measurement unit, for example: \"number/temperature/C\" . The definition of the units of measure is out of scope of this specification but the SI system of units is highly recommended. The recommended strategy for naming measurement units can be read in the Measurement units guidelines section. Example : Temperature sensor with precision of 0.1°C Event Type : number/temperature/C Payload : { \"value\" : 201 , \"scale\" : 10 } ( representing the value of 20.1°C ) or { \"value\" : 305 , \"scale\" : 10 } ( representing the value of 30.5°C ) Type definition : { \"type\" : \"number\" , \"min\" : { \"value\" : -200 , \"scale\" : 10 }, \"max\" : { \"value\" : 1000 , \"scale\" : 10 }, \"step\" : { \"value\" : 1 , \"scale\" : 10 }, \"unit\" : \"C\" } Example : Logarithmic fader reporting its position Event Type : number/attenuation/dB Payload : { \"value\" : 0 } or { \"value\" : -40 } Type definition : { \"type\" : \"number\" , \"min\" : { \"value\" : -80 }, \"max\" : { \"value\" : 20 }, \"step\" : { \"value\" : 1 }, \"unit\" : \"dB\" } 3. enum Enums can be defined on top of any of the three base types and provide both the list of allowed values and metadata that describe those values. This event type is associated with a type definition object that is used to specify the following: a label for all the possible value options [mandatory] a description for all possible value options [mandatory] The enum event type is identified as \"{base}/enum/{Name}\" in the NMOS source, where {base} is boolean , string or number , and {Name} is the name of the enum. Example : A numerical enum exposing the current studio usage and defining the button labels and description of the states. Event Type : number/enum/StudioCondition Payload : { \"value\" : 0 } Type definition : { \"type\" : \"number\" , \"values\" : [ { \"value\" : 0 , \"label\" : \"idle\" , \"description\" : \"Studio condition is idle\" }, { \"value\" : 1 , \"label\" : \"reh\" , \"description\" : \"Studio condition is rehearsal\" }, { \"value\" : 2 , \"label\" : \"tx\" , \"description\" : \"Studio condition is tx\" } ] } Example : An on/off switch with a bit of added metadata. Event Type : boolean/enum/OnOff Payload : { \"value\" : true } Type definition : { \"type\" : \"boolean\" , \"values\" : [ { \"value\" : false , \"label\" : \"OFF\" , \"description\" : \"The device is off\" }, { \"value\" : true , \"label\" : \"ON\" , \"description\" : \"The device is on\" } ] } Example : String based device status Event Type : string/enum/DeviceStatus Payload : { \"value\" : \"ok\" } Type definition : { \"type\" : \"string\" , \"values\" : [ { \"value\" : \"unknown\" , \"label\" : \"Device state is unknown\" , \"description\" : \"Device state is unknown. Check ex",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "Core models",
+      "url": "https://specs.amwa.tv/new/is-07/latest/4.0.%20Core%20models/",
+      "text": "Core models Core models 1. Introduction 2. IS-04 highlights 2.1. Sources 2.2 Flows 2.3 Senders 2.4. Receivers 3. NMOS Parameter Registers highlights 4. IS-05 highlights 4.1. MQTT sender transport parameters 4.2. WebSocket sender transport parameters 4.3. MQTT receiver transport parameters 4.4. WebSocket receiver transport parameters 4.5. Ext_ transport parameters 4.6. Connection management Core models - AMWA IS-07 NMOS Event & Tally Specification Skip to content Core models (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) This document specifies the core models and strategies employed. Other sections can be accessed from the Overview . 1. Introduction The following transports are supported: MQTT WebSocket The v1.0 specification relies on the following existing specifications: IS-04 v1.3 IS-05 v1.1 In terms of relationships and workflows the following diagram shows an example: The diagram does not aim to show any ownership but instead relationships and workflows. A source is the emitter of a particular type of event and plays a vital role in identity. A flow describes the media type for the associated event type. A sender reflects the transport used to package a particular flow on to the network and a receiver is capable of receiving a set of event types using a particular transport. 2. IS-04 highlights 2.1. Sources Event sources have a new field called event_type in order to describe the event type emitted. Event sources use the urn:x-nmos:format:data format. Example: { \"tags\" : {}, \"caps\" : {}, \"parents\" : [], \"description\" : \"Vision Mixer In 5 Active\" , \"format\" : \"urn:x-nmos:format:data\" , \"label\" : \"Vision Mixer In 5 Active\" , \"id\" : \"7a855001-0a87-4ce1-b490-b9d648cd6566\" , \"device_id\" : \"9ce6993a-db5f-47c9-babe-ee956945006d\" , \"version\" : \"1530806114:000000000\" , \"clock_name\" : null , \"event_type\" : \"boolean\" } 2.2 Flows Event flows also have a new event_type field. Event flows use the urn:x-nmos:format:data format and have the media type set to application/json . Example: { \"tags\" : {}, \"parents\" : [], \"description\" : \"Virtual Button 1\" , \"format\" : \"urn:x-nmos:format:data\" , \"label\" : \"Virtual Button 1\" , \"id\" : \"ff455cf3-fb17-448b-8f4c-e6c0e294f5ed\" , \"source_id\" : \"7b9d4864-5d6d-4227-a81d-8dd3e13e99b3\" , \"version\" : \"1529676926:000000000\" , \"media_type\" : \"application/json\" , \"event_type\" : \"boolean\" , \"device_id\" : \"58f6b536-ca4c-43fd-880a-9df2501fc125\" } 2.3 Senders The supported transports have been extended to include: urn:x-nmos:transport:mqtt urn:x-nmos:transport:websocket Neither of these transport types require a transport file ( manifest_href ). Example: { \"tags\" : {}, \"interface_bindings\" : [ \"eth0\" ], \"subscription\" : { \"receiver_id\" : null , \"active\" : false }, \"description\" : \"Virtual Button 1\" , \"transport\" : \"urn:x-nmos:transport:mqtt\" , \"label\" : \"Virtual Button 1\" , \"id\" : \"68f519a3-5523-4b2c-b72d-ec23cc80207d\" , \"device_id\" : \"58f6b536-ca4c-43fd-880a-9df2501fc125\" , \"flow_id\" : \"0554b43a-ea7c-418d-a39e-1205ee281af3\" , \"manifest_href\" : null , \"version\" : \"1529676926:000000000\" } 2.4. Receivers Event receivers have a new array called event_types inside the caps field in order to list all of the event types they can consume (more details in Event types ). Event receivers use the urn:x-nmos:format:data format and if the media_types array is present inside the caps field, it must include application/json . The supported transports have been extended to include: urn:x-nmos:transport:mqtt urn:x-nmos:transport:websocket Example: { \"tags\" : {}, \"caps\" : { \"media_types\" : [ \"application/json\" ], \"event_types\" : [ \"boolean\" ] }, \"interface_bindings\" : [ \"eth0\" ], \"description\" : \"Virtual Lamp 1\" , \"format\" : \"urn:x-nmos:format:data\" , \"transport\" : \"urn:x-nmos:transport:mqtt\" , \"label\" : \"Virtual Lamp 1\" , \"id\" : \"8a7bb1c1-4a82-4fd9-a4fb-96f68f560831\" , \"device_id\" : \"58f6b536-ca4c-43fd-880a-9df2501fc125\" , \"version\" : \"1529676926:000000000\" , \"subscription\" : { \"sender_id\" : null , \"active\" : false } } 3. NMOS Parameter Registers highlights Event devices have an additional control in the controls array for the Events API (see Events API ). The definition for this control is detailed with an entry in the NMOS Parameter Registers. 4. IS-05 highlights 4.1. MQTT sender transport parameters The following transport parameters are exposed (as defined for the MQTT transport in the IS-05 specification): destination_host destination_port broker_protocol broker_authorization broker_topic connection_status_broker_topic In addition, this specification defines the following additional parameter: ext_is_07_rest_api_url (the URL of the Events API resource for the associated source) ext_is_07_rest_api_url schemas and examples are defined in IS-07 following the IS-05 templates. 4.2. WebSocket sender transport parameters The following transport parameters are exposed (as defined for the WebSocket transport in the IS-05 specification): connection_uri connection_authorization In addition, this specification defines the following additional parameters: ext_is_07_rest_api_url (the URL of the Events API resource for the associated source) ext_is_07_source_id (the event source id used for filtering subscriptions) ext_is_07_rest_api_url schemas and examples are defined in IS-07 following the IS-05 templates. ext_is_07_source_id schemas and examples are defined in IS-07 following the IS-05 templates. 4.3. MQTT receiver transport parameters The following transport parameters are exposed (as defined for the MQTT transport in the IS-05 specification): source_host source_port broker_protocol broker_authorization broker_topic connection_status_broker_topic In addition, this specification defines the following additional parameter: ext_is_07_rest_api_url (the URL of the Events API resource for the associated source) ext_is_07_rest_api_url schemas and examples are defined in IS-07 following the IS-05 templates. 4.4. WebSocket receiver transport parameters The following transport",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "Transports",
+      "url": "https://specs.amwa.tv/new/is-07/latest/5.0.%20Transports/",
+      "text": "Transports Transports Transports - AMWA IS-07 NMOS Event & Tally Specification Skip to content Transports (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) This document lists the mandatory transports required for this specification. Both of these transports shall be supported by any valid IS-07 implementation with the view that it is the end user who shall decide which of the transports are going to be marked as operational in their system (it may be one of the two or both of them). Any IS-07 viable product should have both transport options as mandatory capabilities which can be turned on/off operationally. For clarity the minimum requirement is that both transports can be made operational. Optionally the product may allow the user to disable the operational use of one of the transports for processing/memory savings. Other sections can be accessed from the Overview . Mandatory supported transports: MQTT WebSocket",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "MQTT Transport",
+      "url": "https://specs.amwa.tv/new/is-07/latest/5.1.%20Transport%20-%20MQTT/",
+      "text": "MQTT Transport MQTT Transport 1. Introduction 2. NMOS Resources transport 3. Connection management 3.1 destination_host, destination_port, source_host, source_port 3.2 broker_topic 3.3 connection_status_broker_topic 3.4 broker_protocol 3.5 broker_authorization 3.6 ext_is_07_rest_api_url 3.7 Disconnecting/Parking 3.8 Connection logic flow 4. QoS Settings 5. Late Joiners 6. MQTT Will Message 7. Broker discovery MQTT Transport - AMWA IS-07 NMOS Event & Tally Specification Skip to content MQTT Transport (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) This document describes the use of the MQTT transport. Other sections can be accessed from the Overview . 1. Introduction Simple and lightweight Broker based Can be used on top of TCP or WebSockets Can use encryption Supports various QOS settings for message delivery Inherently solves the problem of late joiners using retained messages Events filtering is handled by the broker with topic filtering mechanics 2. NMOS Resources transport NMOS resources using MQTT will use the urn:x-nmos:transport:mqtt transport. 3. Connection management Only IS-05 connection management is to be used for connection management of resources defined in this specification. 3.1 destination_host, destination_port, source_host, source_port These two pairs of parameters define the address of the MQTT broker for senders and receivers respectively. As specified in IS-05, if the parameters are set to \"auto\" the sender or receiver should establish for itself which broker it should use, based on a discovery mechanism or its own internal configuration. This specification recommends setting the default based on the mechanism described in Broker discovery . For both senders and receivers, an empty constraint object may be appropriate for these parameters. 3.2 broker_topic The broker_topic parameter holds the MQTT topic for the source associated with the sender. To facilitate filtering, the recommended format is x-nmos/events/{version}/sources/{sourceId} , where {version} is the version of this specification, e.g. v1.0 , and {sourceId} is the associated source id. For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter. For a receiver, an empty constraint object may be appropriate for this parameter. Message types (see Message types ) which use this parameter as the publishing topic: State Reboot Shutdown 3.3 connection_status_broker_topic The connection_status_broker_topic parameter holds the sender's MQTT connection status topic. The recommended format is x-nmos/events/{version}/connections/{connectionId} . The {version} is the version of this specification, e.g. v1.0 . The {connectionId} can be one of the following: sender id (if the MQTT connection on the sending side is unique to each sender) device id (if the MQTT connection on the sending side is shared across a device) node id (if the MQTT connection on the sending side is shared across the whole node) any other persistent unique id as long as it creates a unique topic (for more on identifier persistence and generation, see the IS-04 specification) For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter. For a receiver, an empty constraint object may be appropriate for this parameter. Message types (see Message types ) which use this parameter as the publishing topic: Connection status 3.4 broker_protocol The broker_protocol parameter provides an indication of whether TLS is used for communication with the broker. As specified in IS-05: * \"mqtt\" indicates operation without TLS, and \"secure-mqtt\" indicates use of TLS. * If the parameter is set to \"auto\" the sender or receiver should establish for itself which protocol it should use, based on a discovery mechanism or its own internal configuration. This specification recommends setting the default based on the api_proto value described in Broker discovery . For senders and receivers that do not support both protocols, the IS-05 constraints should list the supported value in an 'enum' for this parameter. 3.5 broker_authorization The broker_authorization parameter is a boolean value which indicates whether authorization is used for communication with the broker. As specified in IS-05: * If the parameter is set to \"auto\" the sender or receiver should establish for itself which protocol it should use, based on a discovery mechanism or its own internal configuration. This specification recommends setting the default based on the api_auth value described in Broker discovery . For senders and receivers that do not support both modes, the IS-05 constraints should list the supported value in an 'enum' for this parameter. 3.6 ext_is_07_rest_api_url The ext_is_07_rest_api_url parameter represents the URL to the Events API resource which offers the current state and type of an event emitter (source) (see Events API ) For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter. For a receiver, an empty constraint object may be appropriate for this parameter. The use of \"auto\" is not defined for this parameter. Example of IS-05 PATCH request on a receiver: { \"sender_id\" : \"9f463872-9621-4939-aa3a-dc3c82d8578b\" , \"master_enable\" : true , \"activation\" : { \"mode\" : \"activate_immediate\" , \"requested_time\" : null }, \"transport_params\" : [ { \"broker_topic\" : \"x-nmos/events/v1.0/sources/9f463872-9621-4939-aa3a-dc3c82d8578b\" , \"connection_status_broker_topic\" : \"x-nmos/events/v1.0/connections/a9c3cc7a-36f1-429c-b480-87b9d7e26b83\" , \"ext_is_07_rest_api_url\" : \"http://hostname/x-nmos/events/v1.0/sources/9f463872-9621-4939-aa3a-dc3c82d8578b/\" } ] } 3.7 Disconnecting/Parking A disconnection IS-05 PATCH request should always trigger the receiver to unsubscribe from the associated broker_topic and connection_status_broke",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "WebSocket Transport",
+      "url": "https://specs.amwa.tv/new/is-07/latest/5.2.%20Transport%20-%20Websocket/",
+      "text": "WebSocket Transport WebSocket Transport 1. Introduction 2. NMOS Resources transport 3. Connection management 3.1 connection_uri 3.2 connection_authorization 3.3 ext_is_07_rest_api_url 3.4 ext_is_07_source_id 3.5 Disconnecting/Parking 4. Subscriptions strategy 4.1 Heartbeats 4.2 Connection logic flow 5. Late joiners WebSocket Transport - AMWA IS-07 NMOS Event & Tally Specification Skip to content WebSocket Transport (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) This document describes the use of the WebSocket transport. Other sections can be accessed from the Overview . 1. Introduction Brokerless Supports encryption Web app friendly Every sender device needs to run a server The problem of late joiners can be solved as the server can send initial states upon connection Events filtering needs to happen within the sender device The NMOS Events & Tally community has shown interest in using the WebSocket protocol as a transport for events and tally information as it is a familiar protocol which has already been used in the NMOS ecosystem. There is an ongoing debate about WebSocket topologies being less efficient than broker based transport topologies like MQTT in a large-scale system because each sending device needs to host its own server to cope with demand. One of the cases we have identified which could be improved is when a device hosts multiple receivers which are interested in multiple senders on another device. In a simple receiver to sender connection mapping a connection would be required from each receiver to each sender. This could be improved with a device subscriptions model whereby you would only have a single connection between the devices with a subscriptions list. With that in mind, going forward you will see concepts such as server and client which represent the senders’ collection and the interested receivers’ collection. Furthermore, even though there will only be a single WebSocket URL for the sender, each client will have its own two-way communication channel (WebSocket connection) with the server with unique subscriptions. 2. NMOS Resources transport NMOS resources using WebSocket will use the urn:x-nmos:transport:websocket transport. 3. Connection management Only IS-05 connection management will be used for connection management of resources defined in this specification. 3.1 connection_uri The connection_uri transport parameter of the IS-05 v1.1 compliant sender is the URL of the associated WebSocket server. All senders on one NMOS device should offer the same connection_uri to allow the number of WebSocket connections needed to be reduced. It may be appropriate for the same connection_uri to be offered for the senders of all devices on a node. Filtering is achieved using the subscription mechanism explained in the following sections. For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter. For a receiver, an empty constraint object may be appropriate for this parameter. 3.2 connection_authorization The connection_authorization parameter is a boolean value which indicates whether authorization is used for communication with the WebSocket server. As specified in IS-05: * If the parameter is set to \"auto\" the sender or receiver should establish for itself which protocol it should use, based on a discovery mechanism or its own internal configuration. For senders and receivers that do not support both modes, the IS-05 constraints should list the supported value in an 'enum' for this parameter. 3.3 ext_is_07_rest_api_url The ext_is_07_rest_api_url transport parameter represents the URL to the Events API resource which offers the current state and type of an event emitter (source) (see Events API ) For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter. For a receiver, an empty constraint object may be appropriate for this parameter. The use of \"auto\" is not defined for this parameter. 3.4 ext_is_07_source_id The ext_is_07_source_id transport parameter represents the source id which is the emitter of the event. This is required for the WebSocket client to be able to build the subscriptions required from the server. Furthermore, the source id is required to filter and help the client determine which of the connected receivers needs to be notified when an event is consumed. For a sender, this value is intended to be static. This means the IS-05 constraints should list the static value in an 'enum' for this parameter. For a receiver, an empty constraint object may be appropriate for this parameter. The use of \"auto\" is not defined for this parameter. Example of IS-05 PATCH request on a receiver: { \"sender_id\" : \"9f463872-9621-4939-aa3a-dc3c82d8578b\" , \"master_enable\" : true , \"activation\" : { \"mode\" : \"activate_immediate\" , \"requested_time\" : null }, \"transport_params\" : [ { \"connection_uri\" : \"ws://hostname/x-nmos/events/v1.0/devices/58f6b536-ca4c-43fd-880a-9df2501fc125\" , \"ext_is_07_source_id\" : \"9f463872-9621-4939-aa3a-dc3c82d8578b\" , \"ext_is_07_rest_api_url\" : \"http://hostname/x-nmos/events/v1.0/sources/9f463872-9621-4939-aa3a-dc3c82d8578b/\" } ] } There is no mandated URL base path for servers to use for connection_uri . The value above, /x-nmos/events/v1.0/devices/{deviceId} , is an example. 3.5 Disconnecting/Parking A disconnection IS-05 PATCH request should always trigger the client to remove the associated source id from the current WebSocket subscriptions list. If the source is the last item in the subscriptions list, then it is recommended for the client to close the underlying WebSocket connection. 4. Subscriptions strategy Upon connection, a client needs to initialise its subscriptions list by sending a subscription command on the WebSocket connection. After establishing the subscriptions list, the client will start receiving events only for the sources it has s",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "Events API",
+      "url": "https://specs.amwa.tv/new/is-07/latest/6.0.%20Event%20and%20tally%20rest%20api/",
+      "text": "Events API Events API 1. Introduction 2. NMOS Resource 3. Usage 4. Type definition changes 5. Cases to avoid 6. Cross-Origin Resource Sharing (CORS) 7. Trailing slashes Events API - AMWA IS-07 NMOS Event & Tally Specification Skip to content Events API (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) This document describes the use of the Events API. Other sections can be accessed from the Overview . 1. Introduction The Events API is meant as a protocol-agnostic means by which a consumer (receiver) can get in sync with the last known state of an event emitter. The API has to be used only together with other event-based transports to minimize the load on the device allowing for better scalability. The main purpose of the API is resolving the problem of late joiners but it can be also used for low-frequency sanity checks of the states for signals that change states very rarely. The API also allows for a consumer to find the type definition associated with a source event type. 2. NMOS Resource The Events API should be advertised as a 'control' endpoint under an IS-04 NMOS device in the controls array using the urn:x-nmos:control:events type. For consistency the href URL offered should always end with a trailing slash. Example: { \"senders\" : [ \"a65c15a4-a52e-4960-8cd2-e05c31196e5f\" , \"68f519a3-5523-4b2c-b72d-ec23cc80207d\" ], \"receivers\" : [ \"8a7bb1c1-4a82-4fd9-a4fb-96f68f560831\" , \"ab450c07-ce54-44da-9ea9-c3e62e7b06d0\" ], \"controls\" : [ { \"type\" : \"urn:x-nmos:control:sr-ctrl/v1.0\" , \"href\" : \"http://hostname/x-nmos/connection/v1.0/\" }, { \"type\" : \"urn:x-nmos:control:events/v1.0\" , \"href\" : \"http://hostname/x-nmos/events/v1.0/\" } ], \"tags\" : {}, \"type\" : \"urn:x-nmos:device:generic\" , \"label\" : \"Events Device\" , \"version\" : \"1529676926:000000000\" , \"node_id\" : \"d1713110-7343-4d9e-b3f4-456c8f6ce765\" , \"id\" : \"58f6b536-ca4c-43fd-880a-9df2501fc125\" , \"description\" : \"Events Engine Device\" } 3. Usage The API base will return the following upon a successful GET request: [ \"sources/\" ] The API sources/{sourceId} resource will return the following upon a successful GET request [ \"state/\" , \"type/\" ] The state resource allows for consumers to retrieve the latest state of the source whereas the type resource allows for the retrieval of the type definition object associated with the event type of the source. Example of retrieving the state of a source: GET http://hostname/x-nmos/events/v1.0/sources/a65c15a4-a52e-4960-8cd2-e05c31196e5f/state Example response: { \"identity\" : { \"source_id\" : \"a65c15a4-a52e-4960-8cd2-e05c31196e5f\" , \"flow_id\" : \"ff455cf3-fb17-448b-8f4c-e6c0e294f5ed\" }, \"timing\" : { \"creation_timestamp\" : \"1529323551:016020406\" , \"action_timestamp\" : \"1529323551:100000000\" }, \"event_type\" : \"boolean\" , \"payload\" : { \"value\" : true } } Example of retrieving the type definition for a source: GET http://hostname/x-nmos/events/v1.0/sources/a65c15a4-a52e-4960-8cd2-e05c31196e5f/type Example response: { \"type\" : \"boolean\" } 4. Type definition changes The type definitions are deemed as static in version 1.0 of this specification. This means the type definition must not change throughout the event life cycle. 5. Cases to avoid This API is only meant for consumer late joiners to synchronise with emitters and shall not be used for regular high intensity polling of states. 6. Cross-Origin Resource Sharing (CORS) In order to permit web-based control interfaces to be hosted remotely, all NMOS APIs MUST implement valid CORS HTTP headers in responses to all requests. In addition to this, where highlighted in the API specifications servers MUST respond to HTTP pre-flight OPTIONS requests. Servers MAY additionally support HTTP OPTIONS requests made to any other API resource. In order to simplify development, the following headers may be returned in order to remove these restrictions as far as possible. Note that these are very relaxed and may not be suitable for a production deployment. Access-Control-Allow-Origin: * Access-Control-Allow-Methods: GET, PUT, POST, PATCH, HEAD, OPTIONS, DELETE Access-Control-Allow-Headers: Content-Type, Accept Access-Control-Max-Age: 3600 To ensure compatibility, the response 'Access-Control-Allow-Headers' could be set from the request's 'Access-Control-Request-Headers'. 7. Trailing slashes For consistency and in order to adhere to how these APIs are specified in RAML, the 'primary' path for every resource has the trailing slash omitted. For example, an ext_is_07_rest_api_url set to http://hostname/x-nmos/events/v1.0/ will have the following resource paths which DO NOT have a trailing slash: http://hostname/x-nmos/events/v1.0/sources http://hostname/x-nmos/events/v1.0/sources/a65c15a4-a52e-4960-8cd2-e05c31196e5f http://hostname/x-nmos/events/v1.0/sources/a65c15a4-a52e-4960-8cd2-e05c31196e5f/type http://hostname/x-nmos/events/v1.0/sources/a65c15a4-a52e-4960-8cd2-e05c31196e5f/state Clients performing GET requests using these primary paths MUST use URLs with no trailing slash present.",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "Measurement units guidelines",
+      "url": "https://specs.amwa.tv/new/is-07/latest/7.0.%20Measurement%20units%20guidelines/",
+      "text": "Measurement units guidelines Measurement units guidelines 1. Introduction 2. Guidelines 2.1. Case sensitive behaviour 2.2 Recommended symbols 2.3 Prefixes Measurement units guidelines - AMWA IS-07 NMOS Event & Tally Specification Skip to content Measurement units guidelines (c) AMWA 2018, CC Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) This document describes the guidelines on how to use measurement units when defining a measurement event type (see Event types - measurements ). Other sections can be accessed from the Overview . 1. Introduction The aim of this document is to create a set of guidelines on how to use measurement units in the Event & Tally specification with the aim of increasing compatibility between implementations. 2. Guidelines 2.1. Case sensitive behaviour Units of measurement must be case sensitive. 2.2 Recommended symbols It is recommended to use the SI symbol associated with the unit of measurement whenever possible, with the following exceptions: if the symbol is outside of the English alphabet use the English literal name (e.g. for resistance use ohm ) for degrees Celsius use C without the degrees symbol 2.3 Prefixes The use of prefixes is allowed but discouraged apart from kg which is an SI base unit. The following further remarks apply to prefixes: micro (10^-6) will be prefixed with u k prefix will always stand for (10^3) units and not 2^10 M prefix will always stand for (10^6) units and not 2^20 G prefix will always stand for (10^9) units and not 2^30 and so on",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "EventsAPI",
+      "url": "https://specs.amwa.tv/new/is-07/latest/APIs/EventsAPI/",
+      "text": "EventsAPI EventsAPI EventsAPI - AMWA IS-07 NMOS Event & Tally Specification Skip to content EventsAPI The Events API is exposed by each NMOS Device in a system that supports AMWA NMOS Event & Tally Specification. The API is used to announce the type definitions used by the Event & Tally sources and for the receiving devices to be able to check the current source state. Open EventsAPI API documentation",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "Events version v1.0",
+      "url": "https://specs.amwa.tv/new/is-07/latest/APIs/EventsAPI/",
+      "text": "Events version v1.0 Events version v1.0 Overview Base HTTP status code 200 Body Sources HTTP status code 200 Body URI Parameters HTTP status code 200 Body HTTP status code 404 Body URI Parameters HTTP status code 200 Body HTTP status code 404 Body URI Parameters HTTP status code 200 Body HTTP status code 404 Body Events Events version v1.0 http://example.api.com/x-nmos/events/{version} version : required (v1.0) Overview The Events API is exposed by each NMOS Device in a system that supports AMWA NMOS Event & Tally Specification. The API is used to announce the type definitions used by the Event & Tally sources and for the receiving devices to be able to check the current source state. Base / get get List of paths available from this API × get / List of paths available from this API Response HTTP status code 200 Body Media type : application/json Type : json Content : { \"$id\": \"https://www.amwa.tv/event_and_tally/base.json\", \"$schema\": \"http://json-schema.org/draft-04/schema#\", \"type\": \"array\", \"description\": \"Describes the Events API base resource\", \"title\": \"Events API base resource\", \"items\": { \"type\": \"string\", \"enum\": [ \"sources/\" ], \"minItems\": 1, \"maxItems\": 1, \"uniqueItems\": true } } Example : [ \"sources/\" ] Sources /sources get get List of the Event & Tally compatible sources × get /sources List of the Event & Tally compatible sources Response HTTP status code 200 Body Media type : application/json Type : json Content : { \"$id\": \"https://www.amwa.tv/event_and_tally/sources.json\", \"$schema\": \"http://json-schema.org/draft-04/schema#\", \"type\": \"array\", \"description\": \"A list of Event & Tally Source resources\", \"title\": \"Collection of Event & Tally Sources\", \"items\": { \"description\": \"IDs of the Event & Tally compatible sources\", \"type\": \"string\", \"pattern\": \"^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\\\\/$\" }, \"minItems\": 0, \"uniqueItems\": true } Example : [ \"1ea39324-a32b-4e1d-86e9-33f9956ebc60/\", \"f9c7b88b-1846-43d9-9e53-c230e77d91ac/\" ] /sources /{sourceId} get get Get a single source × get /sources /{sourceId} Get a single source Request Response URI Parameters sourceId : required (string - pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$) HTTP status code 200 Body Media type : application/json Type : json Content : { \"$id\": \"https://www.amwa.tv/event_and_tally/source.json\", \"$schema\": \"http://json-schema.org/draft-04/schema#\", \"type\": \"array\", \"description\": \"Describes the Event & Tally source\", \"title\": \"Event & Tally source\", \"items\": { \"type\": \"string\", \"enum\": [ \"type/\", \"state/\" ], \"minItems\": 2, \"maxItems\": 2, \"uniqueItems\": true } } Example : [ \"state/\", \"type/\" ] HTTP status code 404 Returned when the requested Source ID does not exist Body Media type : application/json Type : json Content : { \"$id\": \"https://www.amwa.tv/event_and_tally/error.json\", \"$schema\": \"http://json-schema.org/draft-04/schema#\", \"type\": \"object\", \"description\": \"Describes the standard error response which is returned with HTTP codes 400 and above\", \"title\": \"Error response\", \"required\": [ \"code\", \"error\", \"debug\" ], \"properties\": { \"code\": { \"description\": \"HTTP error code\", \"type\": \"integer\", \"minimum\": 400, \"maximum\": 599 }, \"error\": { \"description\": \"Human readable message which is suitable for user interface display, and helpful to the user\", \"type\": \"string\" }, \"debug\": { \"description\": \"Debug information which may assist a programmer working with the API\", \"type\": [\"null\", \"string\"] } } } /sources/{sourceId} /type get get JSON containing detailed type information × get /sources/{sourceId} /type JSON containing detailed type information Request Response URI Parameters sourceId : required (string - pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$) HTTP status code 200 Body Media type : application/json Type : json Content : { \"$id\": \"https://www.amwa.tv/event_and_tally/type.json\", \"$schema\": \"http://json-schema.org/draft-04/schema#\", \"type\": \"object\", \"description\": \"Type definition\", \"title\": \"Type definition\", \"oneOf\": [ { \"$ref\": \"type_boolean.json\" }, { \"$ref\": \"type_boolean_enum.json\" }, { \"$ref\": \"type_number.json\" }, { \"$ref\": \"type_number_enum.json\" }, { \"$ref\": \"type_string.json\" }, { \"$ref\": \"type_string_enum.json\" } ] } Example : { \"type\": \"boolean\" } HTTP status code 404 Returned when the requested Source ID does not exist Body Media type : application/json Type : json Content : { \"$id\": \"https://www.amwa.tv/event_and_tally/error.json\", \"$schema\": \"http://json-schema.org/draft-04/schema#\", \"type\": \"object\", \"description\": \"Describes the standard error response which is returned with HTTP codes 400 and above\", \"title\": \"Error response\", \"required\": [ \"code\", \"error\", \"debug\" ], \"properties\": { \"code\": { \"description\": \"HTTP error code\", \"type\": \"integer\", \"minimum\": 400, \"maximum\": 599 }, \"error\": { \"description\": \"Human readable message which is suitable for user interface display, and helpful to the user\", \"type\": \"string\" }, \"debug\": { \"description\": \"Debug information which may assist a programmer working with the API\", \"type\": [\"null\", \"string\"] } } } /sources/{sourceId} /state get get JSON containing the last state change notification sent over the transport protocols × get /sources/{sourceId} /state JSON containing the last state change notification sent over the transport protocols Request Response URI Parameters sourceId : required (string - pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$) HTTP status code 200 Body Media type : application/json Type : json Content : { \"$id\": \"https://www.amwa.tv/event_and_tally/event.json\", \"$schema\": \"http://json-schema.org/draft-04/schema#\", \"type\": \"object\", \"description\": \"Message that gets sent out when the source state changes\", \"title\": \"State change event\", \"oneOf\": [{ \"$ref\": \"event_boolean.json\" }, { \"$ref\": \"event_number.json\" }, { \"$ref\": \"event_string.json\" }, { \"$ref\": \"event_object.json\" }] } Exa",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "APIs",
+      "url": "https://specs.amwa.tv/new/is-07/latest/APIs/",
+      "text": "APIs APIs APIs - AMWA IS-07 NMOS Event & Tally Specification Skip to content APIs EventsAPI",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "connection-status-message.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/connection-status-message/",
+      "text": "connection-status-message.json connection-status-message.json connection-status-message.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content connection-status-message.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "connectionapi-v1.1-receiver-active-get-mqtt-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/connectionapi-v1.1-receiver-active-get-mqtt-200/",
+      "text": "connectionapi-v1.1-receiver-active-get-mqtt-200.json connectionapi-v1.1-receiver-active-get-mqtt-200.json connectionapi-v1.1-receiver-active-get-mqtt-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content connectionapi-v1.1-receiver-active-get-mqtt-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "connectionapi-v1.1-receiver-active-get-websocket-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/connectionapi-v1.1-receiver-active-get-websocket-200/",
+      "text": "connectionapi-v1.1-receiver-active-get-websocket-200.json connectionapi-v1.1-receiver-active-get-websocket-200.json connectionapi-v1.1-receiver-active-get-websocket-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content connectionapi-v1.1-receiver-active-get-websocket-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "connectionapi-v1.1-sender-active-get-mqtt-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/connectionapi-v1.1-sender-active-get-mqtt-200/",
+      "text": "connectionapi-v1.1-sender-active-get-mqtt-200.json connectionapi-v1.1-sender-active-get-mqtt-200.json connectionapi-v1.1-sender-active-get-mqtt-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content connectionapi-v1.1-sender-active-get-mqtt-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "connectionapi-v1.1-sender-active-get-websocket-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/connectionapi-v1.1-sender-active-get-websocket-200/",
+      "text": "connectionapi-v1.1-sender-active-get-websocket-200.json connectionapi-v1.1-sender-active-get-websocket-200.json connectionapi-v1.1-sender-active-get-websocket-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content connectionapi-v1.1-sender-active-get-websocket-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-base-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-base-get-200/",
+      "text": "eventsapi-base-get-200.json eventsapi-base-get-200.json eventsapi-base-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-base-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-sourceid-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-sourceid-get-200/",
+      "text": "eventsapi-sourceid-get-200.json eventsapi-sourceid-get-200.json eventsapi-sourceid-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-sourceid-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-sources-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-sources-get-200/",
+      "text": "eventsapi-sources-get-200.json eventsapi-sources-get-200.json eventsapi-sources-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-sources-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-state-boolean-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-state-boolean-get-200/",
+      "text": "eventsapi-state-boolean-get-200.json eventsapi-state-boolean-get-200.json eventsapi-state-boolean-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-state-boolean-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-state-number-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-state-number-get-200/",
+      "text": "eventsapi-state-number-get-200.json eventsapi-state-number-get-200.json eventsapi-state-number-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-state-number-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-state-number-measurement-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-state-number-measurement-get-200/",
+      "text": "eventsapi-state-number-measurement-get-200.json eventsapi-state-number-measurement-get-200.json eventsapi-state-number-measurement-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-state-number-measurement-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-state-number-rational-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-state-number-rational-get-200/",
+      "text": "eventsapi-state-number-rational-get-200.json eventsapi-state-number-rational-get-200.json eventsapi-state-number-rational-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-state-number-rational-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-state-string-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-state-string-get-200/",
+      "text": "eventsapi-state-string-get-200.json eventsapi-state-string-get-200.json eventsapi-state-string-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-state-string-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-type-boolean-enum-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-type-boolean-enum-get-200/",
+      "text": "eventsapi-type-boolean-enum-get-200.json eventsapi-type-boolean-enum-get-200.json eventsapi-type-boolean-enum-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-type-boolean-enum-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-type-boolean-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-type-boolean-get-200/",
+      "text": "eventsapi-type-boolean-get-200.json eventsapi-type-boolean-get-200.json eventsapi-type-boolean-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-type-boolean-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-type-number-enum-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-type-number-enum-get-200/",
+      "text": "eventsapi-type-number-enum-get-200.json eventsapi-type-number-enum-get-200.json eventsapi-type-number-enum-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-type-number-enum-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-type-number-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-type-number-get-200/",
+      "text": "eventsapi-type-number-get-200.json eventsapi-type-number-get-200.json eventsapi-type-number-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-type-number-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-type-number-measurement-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-type-number-measurement-get-200/",
+      "text": "eventsapi-type-number-measurement-get-200.json eventsapi-type-number-measurement-get-200.json eventsapi-type-number-measurement-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-type-number-measurement-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-type-string-enum-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-type-string-enum-get-200/",
+      "text": "eventsapi-type-string-enum-get-200.json eventsapi-type-string-enum-get-200.json eventsapi-type-string-enum-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-type-string-enum-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "eventsapi-type-string-get-200.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/eventsapi-type-string-get-200/",
+      "text": "eventsapi-type-string-get-200.json eventsapi-type-string-get-200.json eventsapi-type-string-get-200.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content eventsapi-type-string-get-200.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "health-command.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/health-command/",
+      "text": "health-command.json health-command.json health-command.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content health-command.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "health-message.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/health-message/",
+      "text": "health-message.json health-message.json health-message.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content health-message.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "Examples",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/",
+      "text": "Examples Examples Examples - AMWA IS-07 NMOS Event & Tally Specification Skip to content Examples connection-status-message.json connectionapi-v1.1-receiver-active-get-mqtt-200.json connectionapi-v1.1-receiver-active-get-websocket-200.json connectionapi-v1.1-sender-active-get-mqtt-200.json connectionapi-v1.1-sender-active-get-websocket-200.json eventsapi-base-get-200.json eventsapi-sourceid-get-200.json eventsapi-sources-get-200.json eventsapi-state-boolean-get-200.json eventsapi-state-number-get-200.json eventsapi-state-number-measurement-get-200.json eventsapi-state-number-rational-get-200.json eventsapi-state-string-get-200.json eventsapi-type-boolean-enum-get-200.json eventsapi-type-boolean-get-200.json eventsapi-type-number-enum-get-200.json eventsapi-type-number-get-200.json eventsapi-type-number-measurement-get-200.json eventsapi-type-string-enum-get-200.json eventsapi-type-string-get-200.json health-command.json health-message.json reboot-message.json shutdown-message.json subscription-command.json subscription-unsubscribe-command.json",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "reboot-message.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/reboot-message/",
+      "text": "reboot-message.json reboot-message.json reboot-message.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content reboot-message.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "shutdown-message.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/shutdown-message/",
+      "text": "shutdown-message.json shutdown-message.json shutdown-message.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content shutdown-message.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "subscription-command.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/subscription-command/",
+      "text": "subscription-command.json subscription-command.json subscription-command.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content subscription-command.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "subscription-unsubscribe-command.json",
+      "url": "https://specs.amwa.tv/new/is-07/latest/examples/subscription-unsubscribe-command/",
+      "text": "subscription-unsubscribe-command.json subscription-unsubscribe-command.json subscription-unsubscribe-command.json - AMWA IS-07 NMOS Event & Tally Specification Skip to content subscription-unsubscribe-command.json View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "AMWA IS-07 NMOS Event & Tally Specification",
+      "url": "https://specs.amwa.tv/new/is-07/latest/",
+      "text": "AMWA IS-07 NMOS Event & Tally Specification AMWA IS-07 NMOS Event & Tally Specification Getting started Releases Contents AMWA IS-07 NMOS Event & Tally Specification - AMWA IS-07 NMOS Event & Tally Specification Skip to content AMWA IS-07 NMOS Event & Tally Specification This repository contains details of this AMWA Specification, including message types, event types, core models, transports, REST API and measurement units guidelines. Getting started Readers are advised to be familiar with: The JT-NM Reference Architecture (http://jt-nm.org/) The overview of Networked Media Open Specifications The NMOS Discovery and Registration Specification (IS-04) The NMOS Connection Management Specification (IS-05) Readers should read the documentation in this repository, and the APIs , which are written in RAML. HTML renders of this repo will be made available through GitHub Pages Releases It is recommended that the tagged releases are used as a reference for development as opposed to the 'master' or development branches of this repository. Each version of the specification is available under a v<#MAJOR>.<#MINOR> tag such as 'v1.0'. Once a specification has been released, any updates to its documentation and schemas which do not modify the specification will be made available via a v<#MAJOR>.<#MINOR>.<#UPDATE> tag such as 'v1.0.1'. Contents README.md -- This file docs/ -- Documentation APIs/ -- API descriptions examples/ -- Example JSON requests, responses and event messages LICENSE -- Licenses for software and text documents NOTICE -- Disclaimer",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "base",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/base/",
+      "text": "base base base - AMWA IS-07 NMOS Event & Tally Specification Skip to content base With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "command",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/command/",
+      "text": "command command command - AMWA IS-07 NMOS Event & Tally Specification Skip to content command With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "command_health",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/command_health/",
+      "text": "command_health command_health command_health - AMWA IS-07 NMOS Event & Tally Specification Skip to content command_health With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "command_subscription",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/command_subscription/",
+      "text": "command_subscription command_subscription command_subscription - AMWA IS-07 NMOS Event & Tally Specification Skip to content command_subscription With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "error",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/error/",
+      "text": "error error error - AMWA IS-07 NMOS Event & Tally Specification Skip to content error With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "event",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/event/",
+      "text": "event event event - AMWA IS-07 NMOS Event & Tally Specification Skip to content event With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "event_boolean",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/event_boolean/",
+      "text": "event_boolean event_boolean event_boolean - AMWA IS-07 NMOS Event & Tally Specification Skip to content event_boolean With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "event_core",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/event_core/",
+      "text": "event_core event_core event_core - AMWA IS-07 NMOS Event & Tally Specification Skip to content event_core With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "event_number",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/event_number/",
+      "text": "event_number event_number event_number - AMWA IS-07 NMOS Event & Tally Specification Skip to content event_number With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "event_object",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/event_object/",
+      "text": "event_object event_object event_object - AMWA IS-07 NMOS Event & Tally Specification Skip to content event_object With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "event_string",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/event_string/",
+      "text": "event_string event_string event_string - AMWA IS-07 NMOS Event & Tally Specification Skip to content event_string With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "JSON Schemas",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/",
+      "text": "JSON Schemas JSON Schemas JSON Schemas - AMWA IS-07 NMOS Event & Tally Specification Skip to content JSON Schemas base command command_health command_subscription error event event_boolean event_core event_number event_object event_string message message_connection_status message_health message_shutdown_reboot number receiver_transport_params_ext sender_transport_params_ext source sources type type_boolean type_boolean_enum type_number type_number_enum type_string type_string_enum",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "message",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/message/",
+      "text": "message message message - AMWA IS-07 NMOS Event & Tally Specification Skip to content message With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "message_connection_status",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/message_connection_status/",
+      "text": "message_connection_status message_connection_status message_connection_status - AMWA IS-07 NMOS Event & Tally Specification Skip to content message_connection_status !!! warning This historical schema is not valid JSON: Expecting ',' delimiter: line 22 column 1 (char 1099) { \"$id\" : \"https://www.amwa.tv/event_and_tally/message_connection_status.json\" , \"$schema\" : \"http://json-schema.org/draft-04/schema#\" , \"type\" : \"object\" , \"description\" : \"Message that indicates the status of the connection between the MQTT client and the broker. The topic used is connection specific and has to be specified in the connection_status_broker_topic parameter of the MQTT IS-05 transport parameters object. The client should publish this message with the RETAIN flag set, after opening the connection to the broker and before closing the connection normally. The client should also configure a retained Will Message indicating it is disconnected.\" , \"title\" : \"Connection status message\" , \"required\" : [ \"message_type\" , \"active\" ], \"properties\" : { \"message_type\" : { \"description\" : \"A fixed string showing this is a connection status message\" , \"type\" : \"string\" , \"pattern\" : \"^connection_status$\" }, \"active\" : { \"description\" : \"A boolean value showing whether the MQTT client is connected to the broker.\" , \"type\" : \"boolean\" } }",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "message_health",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/message_health/",
+      "text": "message_health message_health message_health - AMWA IS-07 NMOS Event & Tally Specification Skip to content message_health With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "message_shutdown_reboot",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/message_shutdown_reboot/",
+      "text": "message_shutdown_reboot message_shutdown_reboot message_shutdown_reboot - AMWA IS-07 NMOS Event & Tally Specification Skip to content message_shutdown_reboot With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "number",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/number/",
+      "text": "number number number - AMWA IS-07 NMOS Event & Tally Specification Skip to content number With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "receiver_transport_params_ext",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/receiver_transport_params_ext/",
+      "text": "receiver_transport_params_ext receiver_transport_params_ext receiver_transport_params_ext - AMWA IS-07 NMOS Event & Tally Specification Skip to content receiver_transport_params_ext With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "sender_transport_params_ext",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/sender_transport_params_ext/",
+      "text": "sender_transport_params_ext sender_transport_params_ext sender_transport_params_ext - AMWA IS-07 NMOS Event & Tally Specification Skip to content sender_transport_params_ext With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "source",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/source/",
+      "text": "source source source - AMWA IS-07 NMOS Event & Tally Specification Skip to content source With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "sources",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/sources/",
+      "text": "sources sources sources - AMWA IS-07 NMOS Event & Tally Specification Skip to content sources With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "type",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/type/",
+      "text": "type type type - AMWA IS-07 NMOS Event & Tally Specification Skip to content type With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "type_boolean",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/type_boolean/",
+      "text": "type_boolean type_boolean type_boolean - AMWA IS-07 NMOS Event & Tally Specification Skip to content type_boolean With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "type_boolean_enum",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/type_boolean_enum/",
+      "text": "type_boolean_enum type_boolean_enum type_boolean_enum - AMWA IS-07 NMOS Event & Tally Specification Skip to content type_boolean_enum With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "type_number",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/type_number/",
+      "text": "type_number type_number type_number - AMWA IS-07 NMOS Event & Tally Specification Skip to content type_number With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "type_number_enum",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/type_number_enum/",
+      "text": "type_number_enum type_number_enum type_number_enum - AMWA IS-07 NMOS Event & Tally Specification Skip to content type_number_enum With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "type_string",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/type_string/",
+      "text": "type_string type_string type_string - AMWA IS-07 NMOS Event & Tally Specification Skip to content type_string With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    },
+    {
+      "title": "type_string_enum",
+      "url": "https://specs.amwa.tv/new/is-07/latest/schemas/type_string_enum/",
+      "text": "type_string_enum type_string_enum type_string_enum - AMWA IS-07 NMOS Event & Tally Specification Skip to content type_string_enum With refs Resolved View: Folding Raw Expand all Collapse all View: Folding Raw Expand all Collapse all",
+      "repository": "AMWA-TV/is-07"
+    }
+  ]
+}
