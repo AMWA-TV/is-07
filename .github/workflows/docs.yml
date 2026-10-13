@@ -36,6 +36,7 @@ jobs:
       versioned: true
       site-name: is-07
       public-docs-root: https://specs.amwa.tv/is-07
+      upload-prefix: ''
       legacy-mapping: .docs/legacy-mappings.csv
       source-ref: ${{ inputs.ref || github.ref_name }}
       rebuild-all: ${{ inputs.rebuild_all || false }}
