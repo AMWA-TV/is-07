@@ -1,0 +1,37 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/event_boolean.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Describes an event with boolean payload",
+  "title": "Boolean event",
+  "allOf": [
+    { "$ref": "event_core.json" },
+    {
+      "type": "object",
+      "required": [
+        "event_type",
+        "payload"
+      ],
+      "properties": {
+        "event_type": {
+          "description": "Event type",
+          "type": "string",
+          "pattern": "^boolean(?:\\/[a-zA-Z_\\-])*$"
+        },
+        "payload": {
+          "description": "Boolean payload",
+          "type": "object",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "description": "Boolean value",
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

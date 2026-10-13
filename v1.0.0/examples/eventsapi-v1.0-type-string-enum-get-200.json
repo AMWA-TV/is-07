@@ -1,0 +1,25 @@
+{
+  "type" :  "string",
+  "values" : [
+    {
+      "value": "unknown",
+      "label": "Device state is unknown",
+      "description": "Device state is unknown. Check extension card is plugged in correctly."
+    },
+    {
+      "value": "ok",
+      "label": "Device state is ok",
+      "description": "Device state is ok."
+    },
+    {
+      "value": "warn",
+      "label": "Device state is warning",
+      "description": "Device state is warning. PSU 1 shows signs of failure."
+    },
+    {
+      "value": "fail",
+      "label": "Device state is fail",
+      "description": "Device state is fail. No PTP reference found."
+    }
+  ]
+}

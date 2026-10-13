@@ -1,0 +1,15 @@
+{
+  "type" :  "boolean",
+  "values" : [
+    {
+      "value": false,
+      "label": "OFF",
+      "description": "The device is off"
+    },
+    {
+      "value": true,
+      "label": "ON",
+      "description": "The device is on"
+    }
+  ]
+}

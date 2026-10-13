@@ -1,0 +1,13 @@
+{
+  "$id": "https://www.amwa.tv/event_and_tally/event.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Type definition",
+  "title": "Type definition",
+  "oneOf": [
+    { "$ref": "event_boolean.json" },
+    { "$ref": "event_number.json" },
+    { "$ref": "event_string.json" },
+    { "$ref": "event_object.json" }
+  ]
+}
