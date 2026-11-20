@@ -3,12 +3,6 @@
   "repository": "AMWA-TV/is-07",
   "documents": [
     {
-      "title": "Page not found",
-      "url": "https://specs.amwa.tv/is-07/latest/404/",
-      "text": "Page not found Page not found Page not found - AMWA IS-07 NMOS Event & Tally Specification Skip to content Page not found The page you requested could not be found. Return to the documentation home",
-      "repository": "AMWA-TV/is-07"
-    },
-    {
       "title": "EventsAPI",
       "url": "https://specs.amwa.tv/is-07/latest/APIs/EventsAPI/",
       "text": "EventsAPI EventsAPI EventsAPI - AMWA IS-07 NMOS Event & Tally Specification Skip to content EventsAPI The Events API is exposed by each NMOS Device in a system that supports AMWA NMOS Event & Tally Specification. The API is used to announce the type definitions used by the Event & Tally sources and for the receiving devices to be able to check the current source state. Open EventsAPI API documentation",
